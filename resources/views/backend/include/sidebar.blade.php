@@ -55,14 +55,14 @@
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                         aria-expanded="false">
                         <i class="mdi mdi-account"></i>
-                        <span class="hide-menu">Mahasiswa</span>
+                        <span class="hide-menu">Siswa</span>
 
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">
                                 <i class="mdi mdi-toggle-switch"></i>
-                                <span class="hide-menu">Mahasiswa</span>
+                                <span class="hide-menu">Siswa</span>
                             </a>
                         </li>
 
@@ -81,7 +81,7 @@
                                 <span class="hide-menu">Karyawan</span>
                             </a>
                         </li>
-                   
+
                     </ul>
                 </li>
 
