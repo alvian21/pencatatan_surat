@@ -6,6 +6,7 @@ Login
 <div id="loginform">
     <div class="logo">
         <span class="db"><img src="{{asset('assets/images/logos/logo-icon.png')}}" alt="logo" /></span>
+        <h5 class="font-medium mb-3 mt-3">SMK PENERBANGAN</h5>
         <h5 class="font-medium mb-3">Sign In to Admin</h5>
     </div>
     <!-- Form -->
