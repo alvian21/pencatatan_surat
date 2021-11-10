@@ -18,6 +18,7 @@ Route::post('/', 'AuthController@postLogin')->name('login');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('dashboard', 'DashboardController');
+    Route::resource('siswa', 'SiswaController');
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });

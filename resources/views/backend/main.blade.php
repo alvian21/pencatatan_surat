@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -24,6 +25,7 @@
     <link href="{{asset('assets/dist/css/style.min.css')}}" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('assets/dist/css/iziToast.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/dist/css/jquery.dataTables.min.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -77,7 +79,7 @@
     <!-- customizer Panel -->
     <!-- ============================================================== -->
     <aside class="customizer">
-       
+
         <div class="customizer-body">
             <ul class="nav customizer-tab" role="tablist">
                 <li class="nav-item">
@@ -450,10 +452,13 @@
     <script src="{{asset('assets/libs/fullcalendar/dist/fullcalendar.min.js')}}"></script>
     <script src="{{asset('assets/dist/js/pages/calendar/cal-init.js')}}"></script>
     <script src="{{asset('assets/dist/js/iziToast.min.js')}}"></script>
+    <script src="{{asset('assets/dist/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/dist/js/sweetalert.min.js')}}"></script>
     <script>
         $('#calendar').fullCalendar('option', 'height', 650);
 
     </script>
     @include('backend.include.toastr')
+    @stack('scripts')
 
 </html>
