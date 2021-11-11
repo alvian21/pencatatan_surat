@@ -1,6 +1,6 @@
 @extends('backend.main')
 @section('title')
-Siswa
+Dokumentasi
 @endsection
 @section('content')
 
@@ -13,39 +13,35 @@ Siswa
         <div class="col-12">
             <div class="material-card card">
                 <div class="card-header container-fluid d-flex justify-content-between">
-                    <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Ijazah Siswa</h4>
-                    <a href="{{route('siswa.create')}}" class="btn btn-primary float-right">Tambah Ijazah Siswa</a>
+                    <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Dokumentasi</h4>
+                    <a href="{{route('dokumentasi.create')}}" class="btn btn-primary float-right">Tambah Dokumentasi</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="table-siswa" class="table table-striped border text-center">
                             <thead>
                                 <tr>
-                                    <th>Nama</th>
-                                    <th>Tgl. Lahir</th>
-                                    <th>Tempat Lahir</th>
-                                    <th>Nama OrangTua</th>
-                                    <th>NISN</th>
-                                    <th>NIS</th>
-                                    <th>NPSN</th>
+                                    <th>Nama Kegiatan</th>
+                                    <th>Tgl. Kegiatan</th>
+                                    <th>Tempat Kegiatan</th>
+                                    <th>Jumlah Peserta</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($siswa as $item)
+                                @forelse ($dokumentasi as $item)
                                 <tr>
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->birth_date_s}}</td>
-                                    <td>{{$item->birth_place_s}}</td>
-                                    <td>{{$item->parents_name}}</td>
-                                    <td>{{$item->nisn}}</td>
-                                    <td>{{$item->nis}}</td>
-                                    <td>{{$item->npsn}}</td>
+                                    <td>{{$item->name_of_activity}}</td>
+                                    <td>{{$item->activity_date}}</td>
+                                    <td>{{$item->activity_place}}</td>
+                                    <td>{{$item->number_of_participant}}</td>
                                     <td>
-                                        <a href="{{route('siswa.edit',[$item->id_sd])}}" class="btn btn-warning"><i
-                                                class="mdi mdi-pencil"></i></a>
-
-                                        <button type="button" class="btn btn-danger hapus" data-id="{{$item->id_sd}}"> <i
+                                        <a href="{{route('dokumentasi.edit',[$item->id_documentation])}}"
+                                            class="btn btn-warning"><i class="mdi mdi-pencil"></i></a>
+                                        <a href="{{route('dokumentasi.show',[$item->id_documentation])}}"
+                                            class="btn btn-info"><i class="mdi mdi-eye"></i></a>
+                                        <button type="button" class="btn btn-danger hapus"
+                                            data-id="{{$item->id_documentation}}"> <i
                                                 class="mdi mdi-delete"></i></button>
                                     </td>
                                 </tr>

@@ -1,6 +1,6 @@
 @extends('backend.main')
 @section('title')
-Siswa
+Dokumentasi
 @endsection
 @section('content')
 <div class="page-content container-fluid">
@@ -12,69 +12,60 @@ Siswa
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Edit Ijazah Siswa</h4>
-                    <form class="mt-4" method="post" action="{{route('siswa.update',[$siswa->id_sd])}}">
+                    <h4 class="card-title">Tambah Dokumentasi</h4>
+                    <form class="mt-4" method="post" action="{{route('dokumentasi.store')}}" enctype="multipart/form-data">
                         @csrf
-                        @method('put')
                         @include('backend.include.alert')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" value="{{$siswa->name}}" id="nama" name="nama">
+                                    <label for="nama_kegiatan">Nama Kegiatan</label>
+                                    <input type="text" class="form-control" id="nama_kegiatan" name="nama_kegiatan">
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" value="{{$siswa->birth_date_s}}" id="tanggal_lahir" name="tanggal_lahir">
+                                    <label for="tempat_kegiatan">Tempat Kegiatan</label>
+                                    <input type="text" class="form-control" id="tempat_kegiatan" name="tempat_kegiatan">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="tempat_lahir">Tempat Lahir</label>
-                                    <input type="text" class="form-control" id="tempat_lahir" value="{{$siswa->birth_place_s}}" name="tempat_lahir">
+                                    <label for="tanggal_kegiatan">Tanggal Kegiatan</label>
+                                    <input type="date" class="form-control" id="tanggal_kegiatan" name="tanggal_kegiatan">
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama_orangtua">Nama Orangtua</label>
-                                    <input type="text" class="form-control" id="nama_orangtua" value="{{$siswa->parents_name}}" name="nama_orangtua">
+                                    <label for="jumlah_peserta">Jumlah Peserta</label>
+                                    <input type="text" class="form-control" id="jumlah_peserta" name="jumlah_peserta">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nisn">NISN</label>
-                                    <input type="text" class="form-control" id="nisn" value="{{$siswa->nisn}}" name="nisn">
+                                    <label for="gambar">Gambar</label>
+                                    <input type="file" class="form-control-file" id="gambar" name="gambar">
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nis">NIS</label>
-                                    <input type="text" class="form-control" id="nis" value="{{$siswa->nis}}" name="nis">
-                                </div>
+                                    <label for="deskripsi">Deskripsi</label>
+                                    <textarea class="form-control" id="deskripsi"  name="deskripsi" rows="3"></textarea>
+                                  </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="npsn">NPSN</label>
-                                    <input type="text" class="form-control" id="npsn" value="{{$siswa->npsn}}" name="npsn">
 
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
                     </form>
@@ -85,4 +76,10 @@ Siswa
 
 </div>
 @endsection
-
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('#table-siswa').DataTable()
+     })
+</script>
+@endpush

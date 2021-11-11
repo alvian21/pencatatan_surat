@@ -1,6 +1,6 @@
 @extends('backend.main')
 @section('title')
-Siswa
+Dokumentasi
 @endsection
 @section('content')
 <div class="page-content container-fluid">
@@ -12,68 +12,62 @@ Siswa
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Tambah Ijazah Siswa</h4>
-                    <form class="mt-4" method="post" action="{{route('siswa.store')}}">
+                    <h4 class="card-title">Detail Dokumentasi</h4>
+                    <form class="mt-4" method="post" action="{{route('dokumentasi.update',[$dokumentasi->id_documentation])}}" enctype="multipart/form-data">
                         @csrf
                         @include('backend.include.alert')
+                        @method('put')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama">
+                                    <label for="nama_kegiatan">Nama Kegiatan</label>
+                                    <input type="text" readonly value="{{$dokumentasi->name_of_activity}}" class="form-control" id="nama_kegiatan" name="nama_kegiatan">
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="tanggal_lahir">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir">
+                                    <label for="tempat_kegiatan">Tempat Kegiatan</label>
+                                    <input type="text" readonly value="{{$dokumentasi->activity_place}}" class="form-control" id="tempat_kegiatan" name="tempat_kegiatan">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="tempat_lahir">Tempat Lahir</label>
-                                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir">
+                                    <label for="tanggal_kegiatan">Tanggal Kegiatan</label>
+                                    <input type="date" readonly value="{{$dokumentasi->activity_date}}" class="form-control" id="tanggal_kegiatan" name="tanggal_kegiatan">
 
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nama_orangtua">Nama Orangtua</label>
-                                    <input type="text" class="form-control" id="nama_orangtua" name="nama_orangtua">
+                                    <label for="jumlah_peserta">Jumlah Peserta</label>
+                                    <input type="text" readonly value="{{$dokumentasi->number_of_participant}}" class="form-control" id="jumlah_peserta" name="jumlah_peserta">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nisn">NISN</label>
-                                    <input type="text" class="form-control" id="nisn" name="nisn">
-
+                                    <label for="gambar">Gambar</label>
+                                    <br>
+                                    <img src="{{asset('storage/image/'.$dokumentasi->image)}}" alt="" style="width: 80%" srcset="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nis">NIS</label>
-                                    <input type="text" class="form-control" id="nis" name="nis">
-                                </div>
+                                    <label for="deskripsi">Deskripsi</label>
+                                    <textarea class="form-control" readonly id="deskripsi"  name="deskripsi" rows="3">{{$dokumentasi->description_d}}</textarea>
+                                  </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="npsn">NPSN</label>
-                                    <input type="text" class="form-control" id="npsn" name="npsn">
 
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <a href="{{route('dokumentasi.index')}}"  class="btn btn-primary">Close</a>
+                                
                             </div>
                         </div>
                     </form>

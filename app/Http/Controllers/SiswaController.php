@@ -51,6 +51,7 @@ class SiswaController extends Controller
             return redirect()->back()->withErrors($validator->errors());
         } else {
             $siswa = new StudentDiploma();
+            $siswa->id_user = auth()->user()->id;
             $siswa->name = $request->get('nama');
             $siswa->birth_date_s = $request->get('tanggal_lahir');
             $siswa->birth_place_s = $request->get('tempat_lahir');

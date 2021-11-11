@@ -43,7 +43,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{route('dokumentasi.index')}}" class="sidebar-link">
                                 <i class="mdi mdi-toggle-switch"></i>
                                 <span class="hide-menu"> Dokumentasi</span>
                             </a>
@@ -62,7 +62,7 @@
                         <li class="sidebar-item">
                             <a href="{{route('siswa.index')}}" class="sidebar-link">
                                 <i class="mdi mdi-toggle-switch"></i>
-                                <span class="hide-menu">Siswa</span>
+                                <span class="hide-menu">Ijazah Siswa</span>
                             </a>
                         </li>
 
