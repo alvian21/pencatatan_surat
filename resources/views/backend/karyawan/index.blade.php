@@ -13,8 +13,8 @@ Siswa
         <div class="col-12">
             <div class="material-card card">
                 <div class="card-header container-fluid d-flex justify-content-between">
-                    <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Ijazah Siswa</h4>
-                    <a href="{{route('siswa.create')}}" class="btn btn-primary float-right">Tambah Ijazah Siswa</a>
+                    <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Karyawan</h4>
+                    <a href="{{route('karyawan.create')}}" class="btn btn-primary float-right">Tambah Karyawan</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -23,27 +23,28 @@ Siswa
                                 <tr>
                                     <th>Nama</th>
                                     <th>Tempat & Tgl. Lahir</th>
-                                    <th>Nama OrangTua</th>
-                                    <th>NISN</th>
-                                    <th>NIS</th>
-                                    <th>NPSN</th>
+
+                                    <th>Alamat</th>
+                                    <th>Nomor Hp</th>
+                                    <th>Pendidikan Terakhir</th>
+                                    <th>Jabatan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($siswa as $item)
+                                @forelse ($karyawan as $item)
                                 <tr>
-                                    <td>{{$item->name}}</td>
-                                    <td>{{$item->birth_place_s}}, {{date("j F Y", strtotime($item->birth_date_s))}}</td>
-                                    <td>{{$item->parents_name}}</td>
-                                    <td>{{$item->nisn}}</td>
-                                    <td>{{$item->nis}}</td>
-                                    <td>{{$item->npsn}}</td>
+                                    <td>{{$item->name_e}}</td>
+                                    <td>{{$item->birth_place}}, {{date("j F Y", strtotime($item->birth_date))}}</td>
+                                    <td>{{$item->address}}</td>
+                                    <td>{{$item->phone_number}}</td>
+                                    <td>{{$item->last_education}}</td>
+                                    <td>{{$item->role}}</td>
                                     <td>
-                                        <a href="{{route('siswa.edit',[$item->id_sd])}}" class="btn btn-warning"><i
+                                        <a href="{{route('karyawan.edit',[$item->employee_id])}}" class="btn btn-warning"><i
                                                 class="mdi mdi-pencil"></i></a>
 
-                                        <button type="button" class="btn btn-danger hapus" data-id="{{$item->id_sd}}"> <i
+                                        <button type="button" class="btn btn-danger hapus" data-id="{{$item->employee_id}}"> <i
                                                 class="mdi mdi-delete"></i></button>
                                     </td>
                                 </tr>
@@ -87,7 +88,7 @@ Siswa
                     if (willDelete) {
                         ajax()
                         $.ajax({
-                            url:"{{url('siswa')}}/"+id,
+                            url:"{{url('karyawan')}}/"+id,
                             method:"DELETE",
                             success:function(response){
                                 if(response.status){

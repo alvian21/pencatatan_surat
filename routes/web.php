@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('dashboard', 'DashboardController');
     Route::resource('siswa', 'SiswaController');
     Route::resource('dokumentasi', 'DokumentasiController');
+    Route::resource('karyawan', 'KaryawanController');
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
