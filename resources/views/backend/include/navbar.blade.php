@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <!-- This is for the sidebar toggle which is visible on mobile only -->
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-            <a class="navbar-brand d-block d-md-none" href="index.html">
+            <a class="navbar-brand d-block d-md-none" href="{{route('dashboard.index')}}">
                 <!-- Logo icon -->
                 <b class="logo-icon">
                     <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -24,7 +24,7 @@
             <div class="d-none d-md-block text-center">
                 <a class="sidebartoggler waves-effect waves-light d-flex align-items-center side-start" href="javascript:void(0)" data-sidebartype="mini-sidebar">
                     <i class="mdi mdi-menu"></i>
-                    <span class="navigation-text ml-3"> Navigation</span>
+                    <span class="navigation-text ml-3"> SMK Penerbangan</span>
                 </a>
             </div>
             <!-- ============================================================== -->
@@ -47,7 +47,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <li class="nav-item border-right">
-                    <a class="nav-link navbar-brand d-none d-md-block" href="index.html">
+                    {{-- <a class="nav-link navbar-brand d-none d-md-block" href="{{route('dashboard.index')}}">
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -64,7 +64,7 @@
                              <!-- Light Logo text -->
                              <img src="{{asset('assets/images/logos/logo-light-text.png')}}" class="light-logo" alt="homepage" />
                         </span>
-                    </a>
+                    </a> --}}
                 </li>
 
             </ul>
@@ -72,7 +72,7 @@
             <!-- Right side toggle and nav items -->
             <!-- ============================================================== -->
             <ul class="navbar-nav float-right">
-                
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{asset('assets/images/users/1.jpg')}}" alt="user" class="rounded-circle" width="31">
