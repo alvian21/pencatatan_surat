@@ -156,6 +156,7 @@ class KaryawanController extends Controller
                 $id_document = $request->get('id_document');
                 foreach ($tipe as $key => $tip) {
                     if (isset($id_document[$key])) {
+                        
                         $ceksertif = Certificate::whereNotIn('id_document',  $id_document)->where('employee_id', $karyawan->employee_id)->get();
 
                         if ($ceksertif->isNotEmpty()) {
