@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
     <title>@yield('title')</title>
     <!-- chartist CSS -->
+    <link rel="stylesheet" href="{{asset('assets/dist/css/all.min.css')}}">
     <link href="{{asset('assets/libs/chartist/dist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
     <!--c3 CSS -->
@@ -26,6 +27,7 @@
 
     <link rel="stylesheet" href="{{asset('assets/dist/css/iziToast.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/dist/css/jquery.dataTables.min.css')}}">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

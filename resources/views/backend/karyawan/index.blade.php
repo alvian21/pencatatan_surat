@@ -1,6 +1,6 @@
 @extends('backend.main')
 @section('title')
-Siswa
+Karyawan
 @endsection
 @section('content')
 
@@ -41,11 +41,12 @@ Siswa
                                     <td>{{$item->last_education}}</td>
                                     <td>{{$item->role}}</td>
                                     <td>
-                                        <a href="{{route('karyawan.edit',[$item->employee_id])}}" class="btn btn-warning"><i
-                                                class="mdi mdi-pencil"></i></a>
-
-                                        <button type="button" class="btn btn-danger hapus" data-id="{{$item->employee_id}}"> <i
-                                                class="mdi mdi-delete"></i></button>
+                                        <a href="{{route('karyawan.edit',[$item->employee_id])}}"
+                                            class="btn btn-warning"><i class="mdi mdi-pencil"></i></a>
+                                        <a href="{{route('karyawan.show',[$item->employee_id])}}"
+                                            class="btn btn-info"><i class="mdi mdi-eye"></i></a>
+                                        <button type="button" class="btn btn-danger hapus"
+                                            data-id="{{$item->employee_id}}"> <i class="mdi mdi-delete"></i></button>
                                     </td>
                                 </tr>
                                 @empty

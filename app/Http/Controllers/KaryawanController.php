@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Employee;
+use App\Certificate;
 
 class KaryawanController extends Controller
 {
@@ -16,7 +18,7 @@ class KaryawanController extends Controller
     public function index()
     {
         $karyawan = Employee::all();
-        return view('backend.karyawan.index',['karyawan' => $karyawan]);
+        return view('backend.karyawan.index', ['karyawan' => $karyawan]);
     }
 
     /**
@@ -45,22 +47,49 @@ class KaryawanController extends Controller
             'nomor_hp' => 'required|unique:employees,phone_number',
             'pendidikan_terakhir' => 'required',
             'jabatan' => 'required',
+            'file.*' => 'nullable|file'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors());
         } else {
-            $karyawan = new Employee();
-            $karyawan->id_user = auth()->user()->id;
-            $karyawan->name_e = $request->get('nama');
-            $karyawan->birth_date = $request->get('tanggal_lahir');
-            $karyawan->birth_place = $request->get('tempat_lahir');
-            $karyawan->address = $request->get('alamat');
-            $karyawan->phone_number = $request->get('nomor_hp');
-            $karyawan->last_education = $request->get('pendidikan_terakhir');
-            $karyawan->role = $request->get('jabatan');
-            $karyawan->save();
-            return redirect()->route('karyawan.index')->with('success', 'Data Karyawan berhasil disimpan');
+
+            try {
+                $karyawan = new Employee();
+                $karyawan->id_user = auth()->user()->id;
+                $karyawan->name_e = $request->get('nama');
+                $karyawan->birth_date = $request->get('tanggal_lahir');
+                $karyawan->birth_place = $request->get('tempat_lahir');
+                $karyawan->address = $request->get('alamat');
+                $karyawan->phone_number = $request->get('nomor_hp');
+                $karyawan->last_education = $request->get('pendidikan_terakhir');
+                $karyawan->role = $request->get('jabatan');
+                $karyawan->save();
+
+                DB::beginTransaction();
+                if ($request->hasFile('file')) {
+                    $file = $request->file('file');
+                    foreach ($file as $key => $value) {
+                        $dokumen = $value->getClientOriginalName();
+                        $filename = pathinfo($dokumen, PATHINFO_FILENAME);
+                        $extension = $value->getClientOriginalExtension();
+                        $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
+                        $path = $value->storeAs("public/certificate", $filenameSimpan);
+                        $tipe = $request->get('tipe')[$key];
+                        $sertif = new Certificate();
+                        $sertif->employee_id = $karyawan->employee_id;
+                        $sertif->name_c = $filenameSimpan;
+                        $sertif->type = $tipe;
+                        $sertif->upload_date = date('Y-m-d');
+                        $sertif->save();
+                    }
+                }
+                DB::commit();
+                return redirect()->route('karyawan.index')->with('success', 'Data Karyawan berhasil disimpan');
+            } catch (\Exception $th) {
+                //throw $th;
+                DB::rollBack();
+            }
         }
     }
 
@@ -72,7 +101,8 @@ class KaryawanController extends Controller
      */
     public function show($id)
     {
-        //
+        $karyawan = Employee::findOrFail($id);
+        return view('backend.karyawan.show', ['karyawan' => $karyawan]);
     }
 
     /**
@@ -104,21 +134,66 @@ class KaryawanController extends Controller
             'nomor_hp' => 'required|unique:employees,phone_number,' . $id . ',employee_id',
             'pendidikan_terakhir' => 'required',
             'jabatan' => 'required',
+            'file.*' => 'nullable|file'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors());
         } else {
-            $karyawan = Employee::findOrFail($id);
-            $karyawan->name_e = $request->get('nama');
-            $karyawan->birth_date = $request->get('tanggal_lahir');
-            $karyawan->birth_place = $request->get('tempat_lahir');
-            $karyawan->address = $request->get('alamat');
-            $karyawan->phone_number = $request->get('nomor_hp');
-            $karyawan->last_education = $request->get('pendidikan_terakhir');
-            $karyawan->role = $request->get('jabatan');
-            $karyawan->save();
-            return redirect()->route('karyawan.index')->with('success', 'Data Karyawan berhasil diupdate');
+            DB::beginTransaction();
+            try {
+                $karyawan = Employee::findOrFail($id);
+                $karyawan->name_e = $request->get('nama');
+                $karyawan->birth_date = $request->get('tanggal_lahir');
+                $karyawan->birth_place = $request->get('tempat_lahir');
+                $karyawan->address = $request->get('alamat');
+                $karyawan->phone_number = $request->get('nomor_hp');
+                $karyawan->last_education = $request->get('pendidikan_terakhir');
+                $karyawan->role = $request->get('jabatan');
+                $karyawan->save();
+
+                $tipe = $request->get('old_tipe');
+                $id_document = $request->get('id_document');
+                foreach ($tipe as $key => $tip) {
+                    if (isset($id_document[$key])) {
+                        $ceksertif = Certificate::whereNotIn('id_document',  $id_document)->where('employee_id', $karyawan->employee_id)->get();
+
+                        if ($ceksertif->isNotEmpty()) {
+                            foreach ($ceksertif as $del) {
+                                unlink(storage_path('app/public/certificate/' . $del->name_c));
+                            }
+                            $delsertif = Certificate::where('id_document', '!=', $id_document[$key])->where('employee_id', $karyawan->employee_id)->delete();
+                        }
+
+                        $sertif = Certificate::findOrFail($id_document[$key]);
+                        $sertif->type = $tip;
+                        $sertif->save();
+                    }
+                }
+                if ($request->hasFile('file')) {
+                    $file = $request->file('file');
+                    foreach ($file as $key => $value) {
+                        $dokumen = $value->getClientOriginalName();
+                        $filename = pathinfo($dokumen, PATHINFO_FILENAME);
+                        $extension = $value->getClientOriginalExtension();
+                        $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
+                        $path = $value->storeAs("public/certificate", $filenameSimpan);
+                        $tipe = $request->get('tipe')[$key];
+                        $sertif = new Certificate();
+                        $sertif->employee_id = $karyawan->employee_id;
+                        $sertif->name_c = $filenameSimpan;
+                        $sertif->type = $tipe;
+                        $sertif->upload_date = date('Y-m-d');
+                        $sertif->save();
+                    }
+                }
+                DB::commit();
+                return redirect()->route('karyawan.index')->with('success', 'Data Karyawan berhasil diupdate');
+            } catch (\Exception $th) {
+
+                DB::rollBack();
+                dd($th);
+            }
         }
     }
 
@@ -131,9 +206,23 @@ class KaryawanController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            Employee::findOrFail($id)->delete();
+            $karyawan = Employee::findOrFail($id);
+            $ceksertif = Certificate::where('employee_id', $karyawan->employee_id)->get();
+            if ($ceksertif->isNotEmpty()) {
+                foreach ($ceksertif as $del) {
+                    unlink(storage_path('app/public/certificate/' . $del->name_c));
+                }
+                $delsertif = Certificate::where('employee_id', $karyawan->employee_id)->delete();
+            }
+            $karyawan->delete();
             $request->session()->flash('success', 'Data karyawan berhasil dihapus!');
             return response()->json(['status' => true]);
         }
+    }
+
+    public function genRandom()
+    {
+        $a = mt_rand(100000, 999999);
+        return $a;
     }
 }

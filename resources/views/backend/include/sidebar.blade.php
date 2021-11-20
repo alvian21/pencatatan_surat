@@ -82,7 +82,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{route('sertifikat.index')}}" class="sidebar-link">
                                 <i class="mdi mdi-toggle-switch"></i>
                                 <span class="hide-menu">Sertifikat</span>
                             </a>

@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('siswa', 'SiswaController');
     Route::resource('dokumentasi', 'DokumentasiController');
     Route::resource('karyawan', 'KaryawanController');
+    Route::resource('sertifikat', 'SertifikatController');
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
