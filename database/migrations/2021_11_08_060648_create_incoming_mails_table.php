@@ -22,8 +22,14 @@ class CreateIncomingMailsTable extends Migration
             $table->date('letter_date_i');
             $table->string('from');
             $table->longText('description_i');
-            $table->string('regarding_i');
-            $table->string('disposition_i');
+            $table->string('to')->nullable();
+            $table->string('regarding_i')->nullable();
+            $table->string('status')->nullable();
+            $table->string('status_description')->nullable();
+            $table->string('scan')->nullable();
+            $table->string('paraf')->nullable();
+            $table->string('letter_code');
+            $table->string('description_letter_code');
             $table->timestamps();
         });
     }

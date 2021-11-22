@@ -22,6 +22,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('dokumentasi', 'DokumentasiController');
     Route::resource('karyawan', 'KaryawanController');
     Route::resource('sertifikat', 'SertifikatController');
+    Route::group(['prefix' => 'surat_masuk','as'=>'surat_masuk.'],function () {
+        Route::get('download/{id}', 'SuratMasukController@download')->name('download');
+    });
+    Route::resource('surat_masuk', 'SuratMasukController');
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });

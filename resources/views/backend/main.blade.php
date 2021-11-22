@@ -27,7 +27,8 @@
 
     <link rel="stylesheet" href="{{asset('assets/dist/css/iziToast.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/dist/css/jquery.dataTables.min.css')}}">
-
+    <link rel="stylesheet" href="{{asset('assets/dist/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/dist/css/select2-bootstrap.min.css')}}">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -456,6 +457,7 @@
     <script src="{{asset('assets/dist/js/iziToast.min.js')}}"></script>
     <script src="{{asset('assets/dist/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/dist/js/sweetalert.min.js')}}"></script>
+    <script src="{{asset('assets/dist/js/select2.min.js')}}"></script>
     <script>
         $('#calendar').fullCalendar('option', 'height', 650);
 

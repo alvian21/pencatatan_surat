@@ -6,10 +6,10 @@
             <h5 class="font-medium text-uppercase mb-0">Dashboard</h5>
         </div>
         <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
-           
+
             <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
                 <ol class="breadcrumb mb-0 justify-content-end p-0 bg-light">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                 </ol>
             </nav>
@@ -26,17 +26,17 @@
             <div class="p-lg-3 p-2">
                 <div class="d-flex align-items-center">
                     <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
-                        <i class="ti-clipboard"></i>
+                        <i class="mdi mdi-email"></i>
                     </button>
                     <div class="ml-4" style="width: 38%;">
-                        <h4 class="font-light">Total Projects</h4>
+                        <h4 class="font-light">Total Surat Masuk</h4>
                         <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: 40%" aria-valuenow="40"
-                                aria-valuemin="0" aria-valuemax="40"></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{$suratmasuk}}%" aria-valuenow="{{$suratmasuk}}"
+                                aria-valuemin="0" ></div>
                         </div>
                     </div>
                     <div class="ml-auto">
-                        <h2 class="display-7 mb-0">23</h2>
+                        <h2 class="display-7 mb-0">{{$suratmasuk}}</h2>
                     </div>
                 </div>
             </div>
@@ -45,17 +45,17 @@
             <div class="p-lg-3 p-2">
                 <div class="d-flex align-items-center">
                     <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
-                        <i class="ti-wallet"></i>
+                        <i class="mdi mdi-email"></i>
                     </button>
                     <div class="ml-4" style="width: 38%;">
-                        <h4 class="font-light">Total Earnings</h4>
+                        <h4 class="font-light">Total Surat Keluar</h4>
                         <div class="progress">
-                            <div class="progress-bar bg-cyan" role="progressbar" style="width: 40%" aria-valuenow="40"
-                                aria-valuemin="0" aria-valuemax="40"></div>
+                            <div class="progress-bar bg-cyan" role="progressbar" style="width: {{$suratkeluar}}%" aria-valuenow="{{$suratkeluar}}"
+                                aria-valuemin="0" ></div>
                         </div>
                     </div>
                     <div class="ml-auto">
-                        <h2 class="display-7 mb-0">76</h2>
+                        <h2 class="display-7 mb-0">{{$suratkeluar}}</h2>
                     </div>
                 </div>
             </div>
@@ -67,14 +67,14 @@
                         <i class="fas fa-dollar-sign"></i>
                     </button>
                     <div class="ml-4" style="width: 38%;">
-                        <h4 class="font-light">Total Earnings</h4>
+                        <h4 class="font-light">Total Karyawan</h4>
                         <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{$totalkaryawan}}%"
+                                aria-valuenow="{{$totalkaryawan}}" aria-valuemin="0" ></div>
                         </div>
                     </div>
                     <div class="ml-auto">
-                        <h2 class="display-7 mb-0">83</h2>
+                        <h2 class="display-7 mb-0">{{$totalkaryawan}}</h2>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
     <!-- ============================================================== -->
     <!-- Products yearly sales, Weather Cards Section  -->
     <!-- ============================================================== -->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
@@ -1508,7 +1508,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </div>
 
 @endsection

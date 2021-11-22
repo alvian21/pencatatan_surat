@@ -11,7 +11,6 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                         aria-expanded="false">
@@ -20,7 +19,7 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{route('surat_masuk.index')}}" class="sidebar-link">
                                 <i class="mdi mdi-cards-variant"></i>
                                 <span class="hide-menu">Surat Masuk</span>
                             </a>
@@ -31,7 +30,6 @@
                                 <span class="hide-menu">Surat Keluar</span>
                             </a>
                         </li>
-
                     </ul>
                 </li>
                 <li class="sidebar-item">
@@ -39,7 +37,6 @@
                         aria-expanded="false">
                         <i class="mdi mdi-file-document"></i>
                         <span class="hide-menu">Dokumentasi</span>
-
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">

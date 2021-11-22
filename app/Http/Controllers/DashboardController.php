@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use Illuminate\Http\Request;
+use App\IncomingMail;
+use App\OutgoingMail;
 
 class DashboardController extends Controller
 {
@@ -13,7 +16,13 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('backend.dashboard.index');
+        $suratmasuk = IncomingMail::count();
+        $suratkeluar = OutgoingMail::count();
+        $totalkaryawan = Employee::count();
+        return view(
+            'backend.dashboard.index',
+            ['suratmasuk' => $suratmasuk, 'suratkeluar' => $suratkeluar, 'totalkaryawan' => $totalkaryawan]
+        );
     }
 
     /**
