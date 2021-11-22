@@ -64,7 +64,7 @@
             <div class="p-lg-3 p-2">
                 <div class="d-flex align-items-center">
                     <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
-                        <i class="fas fa-dollar-sign"></i>
+                        <i class="mdi mdi-account"></i>
                     </button>
                     <div class="ml-4" style="width: 38%;">
                         <h4 class="font-light">Total Karyawan</h4>
