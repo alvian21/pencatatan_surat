@@ -11,6 +11,8 @@
                         <span class="hide-menu">Dashboard</span>
                     </a>
                 </li>
+
+                @if (session('role') == 'admin')
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                         aria-expanded="false">
@@ -87,6 +89,33 @@
                     </ul>
                 </li>
 
+                @endif
+
+                @if (session('role') == 'kepsek')
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                        aria-expanded="false">
+                        <i class="mdi mdi-email"></i>
+                        <span class="hide-menu">Surat</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level">
+                        <li class="sidebar-item">
+                            <a href="{{route('surat_masuk.index')}}" class="sidebar-link">
+                                <i class="mdi mdi-cards-variant"></i>
+                                <span class="hide-menu">Surat Masuk</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="mdi mdi-cart"></i>
+                                <span class="hide-menu">Surat Keluar</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+               
+
+                @endif
             </ul>
         </nav>
         <!-- End Sidebar navigation -->

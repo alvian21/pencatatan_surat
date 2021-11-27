@@ -32,6 +32,7 @@ class AuthController extends Controller
             $cekuser = User::where('username', $request->get('username'))->first();
             if ($cekuser && Hash::check($request->get('password'), $cekuser->password)) {
                 Auth::login($cekuser);
+                session(['role' => $cekuser->role]);
                 session()->flash('info', 'Selamat Datang  !');
                 return redirect()->route('dashboard.index');
             } else {

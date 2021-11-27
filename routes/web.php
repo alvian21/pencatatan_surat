@@ -16,13 +16,28 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'AuthController@getLogin');
 Route::post('/', 'AuthController@postLogin')->name('login');
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'CheckRole:admin']], function () {
     Route::resource('dashboard', 'DashboardController');
     Route::resource('siswa', 'SiswaController');
     Route::resource('dokumentasi', 'DokumentasiController');
     Route::resource('karyawan', 'KaryawanController');
     Route::resource('sertifikat', 'SertifikatController');
-    Route::group(['prefix' => 'surat_masuk','as'=>'surat_masuk.'],function () {
+    Route::group(['prefix' => 'surat_masuk', 'as' => 'surat_masuk.'], function () {
+        Route::get('download/{id}', 'SuratMasukController@download')->name('download');
+    });
+    Route::resource('surat_masuk', 'SuratMasukController');
+
+    Route::get('logout', 'AuthController@logout')->name('logout');
+});
+
+
+Route::group(['middleware' => ['auth', 'CheckRole:kepsek,admin']], function () {
+    Route::resource('dashboard', 'DashboardController');
+    Route::resource('siswa', 'SiswaController');
+    Route::resource('dokumentasi', 'DokumentasiController');
+    Route::resource('karyawan', 'KaryawanController');
+    Route::resource('sertifikat', 'SertifikatController');
+    Route::group(['prefix' => 'surat_masuk', 'as' => 'surat_masuk.'], function () {
         Route::get('download/{id}', 'SuratMasukController@download')->name('download');
     });
     Route::resource('surat_masuk', 'SuratMasukController');
