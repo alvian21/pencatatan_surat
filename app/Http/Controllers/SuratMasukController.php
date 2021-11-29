@@ -287,13 +287,13 @@ class SuratMasukController extends Controller
 
     public function getDataSurat(Request $request)
     {
-        // if ($request->ajax()) {
+        if ($request->ajax()) {
             $id = $request->get('id');
-            $surat = IncomingMail::where('id_incoming',$id)->first();
+            $surat = IncomingMail::where('id_incoming', $id)->first();
             return response()->json([
                 'status' => true,
                 'data' => $surat
             ]);
-        // }
+        }
     }
 }
