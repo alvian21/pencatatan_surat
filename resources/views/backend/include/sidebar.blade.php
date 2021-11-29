@@ -22,13 +22,13 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
                             <a href="{{route('surat_masuk.index')}}" class="sidebar-link">
-                                <i class="mdi mdi-cards-variant"></i>
+                                <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Surat Masuk</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">
-                                <i class="mdi mdi-cart"></i>
+                                <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Surat Keluar</span>
                             </a>
                         </li>
@@ -101,19 +101,19 @@
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
                             <a href="{{route('surat_masuk.index')}}" class="sidebar-link">
-                                <i class="mdi mdi-cards-variant"></i>
+                                <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Surat Masuk</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                             <a href="#" class="sidebar-link">
-                                <i class="mdi mdi-cart"></i>
+                                <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Surat Keluar</span>
                             </a>
                         </li>
                     </ul>
                 </li>
-               
+
 
                 @endif
             </ul>

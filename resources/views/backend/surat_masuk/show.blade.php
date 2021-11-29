@@ -70,7 +70,7 @@ Surat Masuk
                                 <div class="form-group">
                                     <label for="paraf">Paraf</label>
                                     <br>
-                                    <a href="{{asset('storage/surat_masuk/'.$surat->paraf)}}" target="blank">{{$surat->paraf}}</a>
+                                    <a href="{{asset('storage/surat_masuk/paraf/'.$surat->paraf)}}" target="blank">{{$surat->paraf}}</a>
                                 </div>
                             </div>
                         </div>

@@ -165,7 +165,7 @@ class SuratMasukController extends Controller
                     $extension = $dokumen_surat->getClientOriginalExtension();
                     $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
                     $path = $dokumen_surat->storeAs("public/surat_masuk", $filenameSimpan);
-                    $surat->scan = $filename;
+                    $surat->scan = $filenameSimpan;
                 }
                 $surat->save();
                 DB::commit();
@@ -230,5 +230,70 @@ class SuratMasukController extends Controller
             // Error
             exit('Requested file does not exist on our server!');
         }
+    }
+
+    public function update_kepsek(Request $request)
+    {
+        if ($request->ajax()) {
+            $validator = Validator::make($request->all(), [
+                'status' => 'required',
+                'id' => 'required',
+                'paraf' => 'required|file',
+                'keterangan' => 'nullable',
+            ]);
+
+
+            if ($validator->fails()) {
+                $html = ' <div class="alert alert-danger" role="alert">' . $validator->errors()->first() . '</div>';
+
+                return response()->json([
+                    'status' => false,
+                    'data' => $html
+                ]);
+            } else {
+
+                // return response()->json($request->all());
+                DB::beginTransaction();
+
+                try {
+                    $id = $request->get('id');
+                    $surat = IncomingMail::findOrFail($id);
+                    $surat->status = $request->get('status');
+                    $surat->status_description = $request->get('keterangan');
+
+                    if ($request->hasFile('paraf')) {
+                        $paraf = $request->file('paraf');
+                        $dokumen = $paraf->getClientOriginalName();
+                        $filename = pathinfo($dokumen, PATHINFO_FILENAME);
+                        $extension = $paraf->getClientOriginalExtension();
+                        $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
+                        $path = $paraf->storeAs("public/surat_masuk/paraf", $filenameSimpan);
+                        $surat->paraf = $filenameSimpan;
+                    }
+
+                    $surat->save();
+                    DB::commit();
+                    $html = ' <div class="alert alert-success" role="alert">Surat masuk berhasil di update </div>';
+                    return response()->json([
+                        'status' => true,
+                        'data' => $html
+                    ]);
+                } catch (\Exception $th) {
+                    DB::rollBack();
+                }
+            }
+        }
+    }
+
+    public function getDataSurat(Request $request)
+    {
+        // if ($request->ajax()) {
+            $id = $request->get('id');
+            $surat = IncomingMail::where('id_incoming',$id)->first();
+            return response()->json([
+                'status' => true,
+                'data' => $surat
+            ]);
+        // }
     }
 }
