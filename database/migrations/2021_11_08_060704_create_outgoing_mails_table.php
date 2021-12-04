@@ -20,11 +20,15 @@ class CreateOutgoingMailsTable extends Migration
             $table->string('reference_number_o');
             $table->date('letter_date_o');
             $table->string('to');
-            $table->string('regarding_o');
+            $table->string('regarding_o')->nullable();
             $table->string('attachment');
             $table->string('copy');
-            $table->longText('description_o');
-            $table->string('disposition_o');
+            $table->longText('description_o')->nullable();
+            $table->string('status')->nullable();
+            $table->string('status_description')->nullable();
+            $table->string('paraf')->nullable();
+            $table->string('letter_code');
+            $table->string('description_letter_code');
             $table->timestamps();
         });
     }

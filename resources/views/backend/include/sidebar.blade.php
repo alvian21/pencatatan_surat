@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{route('surat_keluar.index')}}" class="sidebar-link">
                                 <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Surat Keluar</span>
                             </a>
@@ -106,7 +106,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="{{route('surat_keluar.index')}}" class="sidebar-link">
                                 <i class="mdi mdi-file"></i>
                                 <span class="hide-menu">Surat Keluar</span>
                             </a>

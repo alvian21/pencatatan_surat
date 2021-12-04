@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Http\Request;
-use App\IncomingMail;
-use App\KodeSurat;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
+use App\KodeSurat;
+use App\OutgoingMail;
 
-class SuratMasukController extends Controller
+class SuratKeluarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,8 +19,8 @@ class SuratMasukController extends Controller
      */
     public function index()
     {
-        $surat = IncomingMail::all();
-        return view('backend.surat_masuk.index', ['surat' => $surat]);
+        $surat = OutgoingMail::all();
+        return view('backend.surat_keluar.index', ['surat' => $surat]);
     }
 
     /**
@@ -33,7 +32,7 @@ class SuratMasukController extends Controller
     {
         $kodesurat = new KodeSurat();
         $kodesurat = $kodesurat->kode();
-        return view('backend.surat_masuk.create', ['kodesurat' => $kodesurat]);
+        return view('backend.surat_keluar.create', ['kodesurat' => $kodesurat]);
     }
 
     /**
@@ -45,13 +44,13 @@ class SuratMasukController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'dari' => 'required',
-            'nomor_surat' => 'required|unique:incoming_mails,reference_number_i',
-            'tanggal_masuk' => 'required',
+            'kepada' => 'required',
+            'nomor_surat' => 'required|unique:outgoing_mails,reference_number_o',
             'tanggal_surat' => 'required',
             'kode_surat' => 'required',
             'perihal' => 'required',
             'dokumen_surat' => 'required|file',
+            'tembusan' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -59,13 +58,13 @@ class SuratMasukController extends Controller
         } else {
             DB::beginTransaction();
             try {
-                $surat = new IncomingMail();
+                $surat = new OutgoingMail();
                 $surat->id_user = auth()->user()->id_user;
-                $surat->reference_number_i = $request->get('nomor_surat');
-                $surat->date_of_receipt = $request->get('tanggal_masuk');
-                $surat->letter_date_i = $request->get('tanggal_surat');
-                $surat->from = $request->get('dari');
-                $surat->description_i = $request->get('perihal');
+                $surat->reference_number_o = $request->get('nomor_surat');
+                $surat->letter_date_o = $request->get('tanggal_surat');
+                $surat->to = $request->get('kepada');
+                $surat->description_o = $request->get('perihal');
+                $surat->copy = $request->get('tembusan');
                 $surat->status = "BELUM DISETUJUI";
                 $surat->letter_code = $request->get('kode_surat');
                 $kodesurat = new KodeSurat();
@@ -79,12 +78,12 @@ class SuratMasukController extends Controller
                     $filename = pathinfo($dokumen, PATHINFO_FILENAME);
                     $extension = $dokumen_surat->getClientOriginalExtension();
                     $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
-                    $path = $dokumen_surat->storeAs("public/surat_masuk", $filenameSimpan);
-                    $surat->scan = $filenameSimpan;
+                    $path = $dokumen_surat->storeAs("public/surat_keluar", $filenameSimpan);
+                    $surat->attachment = $filenameSimpan;
                 }
                 $surat->save();
                 DB::commit();
-                return redirect()->route('surat_masuk.index')->with('success', 'Data Surat Masuk berhasil disimpan');
+                return redirect()->route('surat_keluar.index')->with('success', 'Data Surat Keluar berhasil disimpan');
             } catch (\Exception $th) {
 
                 dd($th);
@@ -103,8 +102,8 @@ class SuratMasukController extends Controller
     {
         $kodesurat = new KodeSurat();
         $kodesurat = $kodesurat->kode();
-        $surat = IncomingMail::findOrFail($id);
-        return view('backend.surat_masuk.show', ['kodesurat' => $kodesurat, 'surat' => $surat]);
+        $surat = OutgoingMail::findOrFail($id);
+        return view('backend.surat_keluar.show', ['kodesurat' => $kodesurat, 'surat' => $surat]);
     }
 
     /**
@@ -117,8 +116,8 @@ class SuratMasukController extends Controller
     {
         $kodesurat = new KodeSurat();
         $kodesurat = $kodesurat->kode();
-        $surat = IncomingMail::findOrFail($id);
-        return view('backend.surat_masuk.edit', ['kodesurat' => $kodesurat, 'surat' => $surat]);
+        $surat = OutgoingMail::findOrFail($id);
+        return view('backend.surat_keluar.edit', ['kodesurat' => $kodesurat, 'surat' => $surat]);
     }
 
     /**
@@ -131,13 +130,13 @@ class SuratMasukController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'dari' => 'required',
-            'nomor_surat' => 'required|unique:incoming_mails,reference_number_i,' . $id . ',id_incoming',
-            'tanggal_masuk' => 'required',
+            'kepada' => 'required',
+            'nomor_surat' => 'required|unique:outgoing_mails,reference_number_o,'.$id.',id_outgoing',
             'tanggal_surat' => 'required',
             'kode_surat' => 'required',
             'perihal' => 'required',
-            'dokumen_surat' => 'nullable|file',
+            'dokumen_surat' => 'file',
+            'tembusan' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -145,13 +144,12 @@ class SuratMasukController extends Controller
         } else {
             DB::beginTransaction();
             try {
-                $surat = IncomingMail::findOrFail($id);
-                $surat->reference_number_i = $request->get('nomor_surat');
-                // $surat->date_of_receipt = $request->get('tanggal_masuk');
-                $surat->letter_date_i = $request->get('tanggal_surat');
-                $surat->from = $request->get('dari');
-                $surat->description_i = $request->get('perihal');
-                $surat->status = "BELUM DISETUJUI";
+                $surat = OutgoingMail::findOrFail($id);
+                $surat->reference_number_o = $request->get('nomor_surat');
+                $surat->letter_date_o = $request->get('tanggal_surat');
+                $surat->to = $request->get('kepada');
+                $surat->description_o = $request->get('perihal');
+                $surat->copy = $request->get('tembusan');
                 $surat->letter_code = $request->get('kode_surat');
                 $kodesurat = new KodeSurat();
                 $kodesurat = $kodesurat->kode();
@@ -164,12 +162,12 @@ class SuratMasukController extends Controller
                     $filename = pathinfo($dokumen, PATHINFO_FILENAME);
                     $extension = $dokumen_surat->getClientOriginalExtension();
                     $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
-                    $path = $dokumen_surat->storeAs("public/surat_masuk", $filenameSimpan);
-                    $surat->scan = $filenameSimpan;
+                    $path = $dokumen_surat->storeAs("public/surat_keluar", $filenameSimpan);
+                    $surat->attachment = $filenameSimpan;
                 }
                 $surat->save();
                 DB::commit();
-                return redirect()->route('surat_masuk.index')->with('success', 'Data Surat Masuk berhasil diupdate');
+                return redirect()->route('surat_keluar.index')->with('success', 'Data Surat Keluar berhasil disimpan');
             } catch (\Exception $th) {
 
                 dd($th);
@@ -187,9 +185,9 @@ class SuratMasukController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
-            $surat = IncomingMail::findOrFail($id);
-            if (!empty($surat->scan)) {
-                $filesurat = storage_path('app/public/surat_masuk/' . $surat->scan);
+            $surat = OutgoingMail::findOrFail($id);
+            if (!empty($surat->attachment)) {
+                $filesurat = storage_path('app/public/surat_keluar/' . $surat->attachment);
                 if (File::exists($filesurat)) {
 
                     unlink($filesurat);
@@ -197,7 +195,7 @@ class SuratMasukController extends Controller
             }
 
             if (!empty($surat->paraf)) {
-                $fileparaf = storage_path('app/public/surat_masuk/' . $surat->paraf);
+                $fileparaf = storage_path('app/public/surat_keluar/' . $surat->paraf);
                 if (File::exists($fileparaf)) {
 
                     unlink($fileparaf);
@@ -205,10 +203,38 @@ class SuratMasukController extends Controller
             }
 
             $surat->delete();
-            $request->session()->flash('success', 'Data surat masuk berhasil dihapus!');
+            $request->session()->flash('success', 'Data surat keluar berhasil dihapus!');
             return response()->json(['status' => true]);
         }
     }
+
+    public function generateKode(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = OutgoingMail::where('letter_code',$request->get('kode_surat'))->count();
+            $lengthid = strlen($id);
+            $resid = $id + 1;
+            if ($lengthid == 1 || $lengthid == 0) {
+                $nomor = "00" . $resid;
+            } elseif ($lengthid == 2) {
+                $nomor = "0" . $resid;
+            } else {
+                $nomor = $resid;
+            }
+
+            $kodesurat = new KodeSurat();
+            $bulan = $kodesurat->getRomawi(date('n'));
+            $tahun = date('Y');
+
+            $resnomor = $nomor . "/104.10/smk.pnb/" . $request->get('kode_surat') . "/" . $bulan . "/" . $tahun;
+            return response()->json([
+                'status' => true,
+                'nomor' => $resnomor,
+                'lengthid' => $lengthid
+            ]);
+        }
+    }
+
     public function genRandom()
     {
         $a = mt_rand(100000, 999999);
@@ -217,9 +243,9 @@ class SuratMasukController extends Controller
 
     public function download($id)
     {
-        $surat = IncomingMail::findOrFail($id);
-        $filename = $surat->scan;
-        $file_path = public_path() . '/storage/surat_masuk/' . $filename;
+        $surat = OutgoingMail::findOrFail($id);
+        $filename = $surat->attachment;
+        $file_path = public_path() . '/storage/surat_keluar/' . $filename;
 
         if (file_exists($file_path)) {
             // Send Download
@@ -231,7 +257,6 @@ class SuratMasukController extends Controller
             exit('Requested file does not exist on our server!');
         }
     }
-
     public function update_kepsek(Request $request)
     {
         if ($request->ajax()) {
@@ -257,7 +282,7 @@ class SuratMasukController extends Controller
 
                 try {
                     $id = $request->get('id');
-                    $surat = IncomingMail::findOrFail($id);
+                    $surat = OutgoingMail::findOrFail($id);
                     $surat->status = $request->get('status');
                     $surat->status_description = $request->get('keterangan');
 
@@ -267,7 +292,7 @@ class SuratMasukController extends Controller
                         $filename = pathinfo($dokumen, PATHINFO_FILENAME);
                         $extension = $paraf->getClientOriginalExtension();
                         $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
-                        $path = $paraf->storeAs("public/surat_masuk/paraf", $filenameSimpan);
+                        $path = $paraf->storeAs("public/surat_keluar/paraf", $filenameSimpan);
                         $surat->paraf = $filenameSimpan;
                     }
 
@@ -289,7 +314,7 @@ class SuratMasukController extends Controller
     {
         if ($request->ajax()) {
             $id = $request->get('id');
-            $surat = IncomingMail::where('id_incoming', $id)->first();
+            $surat = OutgoingMail::where('id_outgoing', $id)->first();
             return response()->json([
                 'status' => true,
                 'data' => $surat

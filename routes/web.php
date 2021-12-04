@@ -23,7 +23,15 @@ Route::group(['middleware' => ['auth', 'CheckRole:kepsek']], function () {
         Route::post('update_surat', 'SuratMasukController@update_kepsek')->name('update_surat');
         Route::get('data_surat', 'SuratMasukController@getDataSurat')->name('data_surat');
     });
+
+    Route::group(['prefix' => 'surat_keluar', 'as' => 'surat_keluar.'], function () {
+        Route::get('download/{id}', 'SuratKeluarController@download')->name('download');
+
+        Route::post('update_surat', 'SuratKeluarController@update_kepsek')->name('update_surat');
+        Route::get('data_surat', 'SuratKeluarController@getDataSurat')->name('data_surat');
+    });
     Route::resource('surat_masuk', 'SuratMasukController')->only(['index','show']);
+    Route::resource('surat_keluar', 'SuratKeluarController')->only(['index','show']);
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
@@ -36,7 +44,12 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
     Route::group(['prefix' => 'surat_masuk', 'as' => 'surat_masuk.'], function () {
         Route::get('download/{id}', 'SuratMasukController@download')->name('download');
     });
+    Route::group(['prefix' => 'surat_keluar', 'as' => 'surat_keluar.'], function () {
+        Route::get('download/{id}', 'SuratKeluarController@download')->name('download');
+        Route::get('generate', 'SuratKeluarController@generateKode')->name('generate');
+    });
     Route::resource('surat_masuk', 'SuratMasukController');
+    Route::resource('surat_keluar', 'SuratKeluarController');
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
