@@ -69,13 +69,22 @@ Karyawan
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="jabatan">Jabatan</label>
                                     <input type="text" class="form-control" id="jabatan" value="{{$karyawan->role}}"
                                         name="jabatan">
 
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control" id="status" name="status">
+                                      <option value="Tenaga Pendidik" @if($karyawan->status == 'Tenaga Pendidik') selected @endif >Tenaga Pendidik</option>
+                                      <option value="Tenaga Kependidikan" @if($karyawan->status == 'Tenaga Kependidikan') selected @endif>Tenaga Kependidikan</option>
+                                    </select>
+                                  </div>
                             </div>
                         </div>
 

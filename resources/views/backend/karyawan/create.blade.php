@@ -36,7 +36,6 @@ Karyawan
                                 <div class="form-group">
                                     <label for="tempat_lahir">Tempat Lahir</label>
                                     <input type="text" class="form-control" required id="tempat_lahir" name="tempat_lahir">
-
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -62,12 +61,20 @@ Karyawan
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="jabatan">Jabatan</label>
                                     <input type="text" class="form-control" required id="jabatan" name="jabatan">
-
                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control" id="status" name="status">
+                                      <option value="Tenaga Pendidik">Tenaga Pendidik</option>
+                                      <option value="Tenaga Kependidikan">Tenaga Kependidikan</option>
+                                    </select>
+                                  </div>
                             </div>
                         </div>
                         <div class="row">

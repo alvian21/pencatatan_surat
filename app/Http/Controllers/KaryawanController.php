@@ -64,6 +64,7 @@ class KaryawanController extends Controller
                 $karyawan->phone_number = $request->get('nomor_hp');
                 $karyawan->last_education = $request->get('pendidikan_terakhir');
                 $karyawan->role = $request->get('jabatan');
+                $karyawan->status = $request->get('status');
                 $karyawan->save();
 
                 DB::beginTransaction();
@@ -150,13 +151,14 @@ class KaryawanController extends Controller
                 $karyawan->phone_number = $request->get('nomor_hp');
                 $karyawan->last_education = $request->get('pendidikan_terakhir');
                 $karyawan->role = $request->get('jabatan');
+                $karyawan->status = $request->get('status');
                 $karyawan->save();
 
                 $tipe = $request->get('old_tipe');
                 $id_document = $request->get('id_document');
                 foreach ($tipe as $key => $tip) {
                     if (isset($id_document[$key])) {
-                        
+
                         $ceksertif = Certificate::whereNotIn('id_document',  $id_document)->where('employee_id', $karyawan->employee_id)->get();
 
                         if ($ceksertif->isNotEmpty()) {

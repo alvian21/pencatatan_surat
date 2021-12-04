@@ -24,6 +24,7 @@ class CreateEmployeesTable extends Migration
             $table->string('phone_number');
             $table->string('last_education');
             $table->string('role');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
