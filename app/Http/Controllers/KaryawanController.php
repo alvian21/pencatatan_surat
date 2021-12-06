@@ -169,9 +169,12 @@ class KaryawanController extends Controller
                                 $delsertif = Certificate::where('id_document', '!=', $id_document[$key])->where('employee_id', $karyawan->employee_id)->delete();
                             }
 
-                            $sertif = Certificate::findOrFail($id_document[$key]);
-                            $sertif->type = $tip;
-                            $sertif->save();
+                            $sertif = Certificate::where("id_document",$id_document[$key])->first();
+                            if($sertif){
+                                $sertif->type = $tip;
+                                $sertif->save();
+                            }
+
                         }
                     }
                 }else{

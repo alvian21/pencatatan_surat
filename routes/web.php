@@ -34,8 +34,8 @@ Route::group(['middleware' => ['auth', 'CheckRole:kepsek']], function () {
         Route::post('update_surat', 'SuratKeluarController@update_kepsek')->name('update_surat');
         Route::get('data_surat', 'SuratKeluarController@getDataSurat')->name('data_surat');
     });
-    Route::resource('surat_masuk', 'SuratMasukController')->only(['index','show']);
-    Route::resource('surat_keluar', 'SuratKeluarController')->only(['index','show']);
+    Route::resource('surat_masuk', 'SuratMasukController');
+    Route::resource('surat_keluar', 'SuratKeluarController');
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
