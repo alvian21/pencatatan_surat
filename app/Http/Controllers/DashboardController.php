@@ -102,4 +102,32 @@ class DashboardController extends Controller
             ]);
         }
     }
+
+    public function grafik_dokumen_karyawan(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $semua = Employee::has('certificate', '>=', 3)->count();
+            $sebagian = Employee::has('certificate', '<', 3)->has('certificate', '>=', 1)->count();
+            $belum = Employee::has('certificate', '=', 0)->count();
+
+            $arr = [
+                [
+                    'data' => $semua,
+                    'label' => 'semua'
+                ],
+                [
+                    'data' => $sebagian,
+                    'label' => 'sebagian'
+                ],
+                [
+                    'data' => $belum,
+                    'label' => 'belum'
+                ],
+            ];
+            return response()->json([
+                'data' => $arr
+            ]);
+        }
+    }
 }

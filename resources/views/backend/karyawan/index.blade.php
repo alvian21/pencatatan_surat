@@ -28,6 +28,7 @@ Karyawan
                                     <th>Nomor Hp</th>
                                     <th>Pendidikan Terakhir</th>
                                     <th>Jabatan</th>
+                                    <th>Jumlah Dokumen</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@ Karyawan
                                     <td>{{$item->phone_number}}</td>
                                     <td>{{$item->last_education}}</td>
                                     <td>{{$item->role}}</td>
+                                    <td>{{count($item->certificate)}}/3</td>
                                     <td>
                                         <a href="{{route('karyawan.edit',[$item->employee_id])}}"
                                             class="btn btn-warning"><i class="mdi mdi-pencil"></i></a>
