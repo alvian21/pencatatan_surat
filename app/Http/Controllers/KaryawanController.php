@@ -166,7 +166,7 @@ class KaryawanController extends Controller
                                 // foreach ($ceksertif as $del) {
                                 //     unlink(storage_path('app/public/certificate/' . $del->name_c));
                                 // }
-                                $delsertif = Certificate::where('id_document', '!=', $id_document[$key])->where('employee_id', $karyawan->employee_id)->delete();
+                                $delsertif = Certificate::whereNotIn('id_document',  $id_document)->where('employee_id', $karyawan->employee_id)->delete();
                             }
 
                             $sertif = Certificate::where("id_document",$id_document[$key])->first();
