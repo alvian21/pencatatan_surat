@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'AuthController@getLogin');
 Route::post('/', 'AuthController@postLogin')->name('login');
 Route::group(['middleware' => ['auth', 'CheckRole:kepsek']], function () {
+    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+        Route::get('karyawan', 'DashboardController@grafik_karyawan')->name('karyawan');
+    });
     Route::resource('dashboard', 'DashboardController');
     Route::group(['prefix' => 'surat_masuk', 'as' => 'surat_masuk.'], function () {
         Route::get('download/{id}', 'SuratMasukController@download')->name('download');
@@ -36,6 +39,9 @@ Route::group(['middleware' => ['auth', 'CheckRole:kepsek']], function () {
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
 Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
+    Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+        Route::get('karyawan', 'DashboardController@grafik_karyawan')->name('karyawan');
+    });
     Route::resource('dashboard', 'DashboardController');
     Route::resource('siswa', 'SiswaController');
     Route::resource('dokumentasi', 'DokumentasiController');

@@ -31,8 +31,8 @@
                     <div class="ml-4" style="width: 38%;">
                         <h4 class="font-light">Total Surat Masuk</h4>
                         <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{$suratmasuk}}%" aria-valuenow="{{$suratmasuk}}"
-                                aria-valuemin="0" ></div>
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{$suratmasuk}}%"
+                                aria-valuenow="{{$suratmasuk}}" aria-valuemin="0"></div>
                         </div>
                     </div>
                     <div class="ml-auto">
@@ -50,8 +50,8 @@
                     <div class="ml-4" style="width: 38%;">
                         <h4 class="font-light">Total Surat Keluar</h4>
                         <div class="progress">
-                            <div class="progress-bar bg-cyan" role="progressbar" style="width: {{$suratkeluar}}%" aria-valuenow="{{$suratkeluar}}"
-                                aria-valuemin="0" ></div>
+                            <div class="progress-bar bg-cyan" role="progressbar" style="width: {{$suratkeluar}}%"
+                                aria-valuenow="{{$suratkeluar}}" aria-valuemin="0"></div>
                         </div>
                     </div>
                     <div class="ml-auto">
@@ -70,7 +70,7 @@
                         <h4 class="font-light">Total Karyawan</h4>
                         <div class="progress">
                             <div class="progress-bar bg-warning" role="progressbar" style="width: {{$totalkaryawan}}%"
-                                aria-valuenow="{{$totalkaryawan}}" aria-valuemin="0" ></div>
+                                aria-valuenow="{{$totalkaryawan}}" aria-valuemin="0"></div>
                         </div>
                     </div>
                     <div class="ml-auto">
@@ -83,20 +83,17 @@
     <!-- ============================================================== -->
     <!-- Products yearly sales, Weather Cards Section  -->
     <!-- ============================================================== -->
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-md-12 col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title text-uppercase">Products Yearly Sales</h5>
-                    <ul class="list-inline dl mb-0 float-right">
-                        <li class="list-inline-item text-info"><i class="fa fa-circle"></i> Mac</li>
-                        <li class="list-inline-item text-danger"><i class="fa fa-circle"></i> Windows</li>
-                    </ul>
-                    <div id="ct-visits" style="height: 320px;"></div>
+                    <h5 class="card-title text-uppercase text-center">Status Karyawan</h5>
+
+                    <canvas id="myChart" width="150"></canvas>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-lg-4">
+        {{-- <div class="col-md-12 col-lg-4">
             <div class="card">
                 <div class="bg-danger">
                     <div id="ct-daily-sales" style="height: 304px"></div>
@@ -115,12 +112,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <!-- ============================================================== -->
     <!-- Manage Table & Walet Cards Section  -->
     <!-- ============================================================== -->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-lg-8 col-md-12">
             <div class="card">
                 <!-- Nav tabs -->
@@ -1512,3 +1509,66 @@
 </div>
 
 @endsection
+@push('scripts')
+<script>
+    const ctx = document.getElementById('myChart');
+    var myChart;
+    $.ajax({
+        url: "{{route('dashboard.karyawan')}}",
+        method: "GET",
+        success: function (response) {
+            console.log(response);
+            $.each(response, function (index, value) {
+                console.log(value);
+
+                var data = []
+                var label = []
+                value.forEach(element => {
+                    data.push(element.jumlah)
+                    label.push(element.status)
+                });
+
+                myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: label,
+                        datasets: [{
+                            label: 'karyawan',
+                            data: data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+        }
+    })
+
+</script>
+
+
+
+
+@endpush

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Employee;
 use Illuminate\Http\Request;
 use App\IncomingMail;
@@ -89,5 +90,16 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function grafik_karyawan(Request $request)
+    {
+        if ($request->ajax()) {
+            $karyawan = Employee::select('status', DB::raw('count(*) as jumlah'))->groupBy('status')->get();
+
+            return response()->json([
+                'data' => $karyawan
+            ]);
+        }
     }
 }

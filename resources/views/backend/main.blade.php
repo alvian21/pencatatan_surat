@@ -444,13 +444,13 @@
     <!--Custom JavaScript -->
     <script src="{{asset('assets/dist/js/custom.min.js')}}"></script>
     <!-- This Page JS -->
-    <script src="{{asset('assets/libs/chartist/dist/chartist.min.js')}}"></script>
-    <script src="{{asset('assets/dist/js/pages/chartist/chartist-plugin-tooltip.js')}}"></script>
+    {{-- <script src="{{asset('assets/libs/chartist/dist/chartist.min.js')}}"></script>
+    <script src="{{asset('assets/dist/js/pages/chartist/chartist-plugin-tooltip.js')}}"></script> --}}
     <script src="{{asset('assets/extra-libs/c3/d3.min.js')}}"></script>
     <script src="{{asset('assets/extra-libs/c3/c3.min.js')}}"></script>
     <script src="{{asset('assets/libs/raphael/raphael.min.js')}}"></script>
     <script src="{{asset('assets/libs/morris.js/morris.min.js')}}"></script>
-    <script src="{{asset('assets/dist/js/pages/dashboards/dashboard1.js')}}"></script>
+    <script src="{{asset('assets/dist/js/chart.min.js')}}"></script>
     <script src="{{asset('assets/libs/moment/min/moment.min.js')}}"></script>
     <script src="{{asset('assets/libs/fullcalendar/dist/fullcalendar.min.js')}}"></script>
     <script src="{{asset('assets/dist/js/pages/calendar/cal-init.js')}}"></script>
