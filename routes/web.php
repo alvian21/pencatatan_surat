@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:kepsek']], function () {
 
     Route::group(['prefix' => 'surat_keluar', 'as' => 'surat_keluar.'], function () {
         Route::get('download/{id}', 'SuratKeluarController@download')->name('download');
-
+        Route::get('generate', 'SuratKeluarController@generateKode')->name('generate');
         Route::post('update_surat', 'SuratKeluarController@update_kepsek')->name('update_surat');
         Route::get('data_surat', 'SuratKeluarController@getDataSurat')->name('data_surat');
     });
