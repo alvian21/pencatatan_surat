@@ -174,6 +174,8 @@ class KaryawanController extends Controller
                             $sertif->save();
                         }
                     }
+                }else{
+                    $ceksertif = Certificate::where('employee_id', $karyawan->employee_id)->delete();
                 }
 
                 if ($request->hasFile('file')) {
