@@ -156,23 +156,26 @@ class KaryawanController extends Controller
 
                 $tipe = $request->get('old_tipe');
                 $id_document = $request->get('id_document');
-                foreach ($tipe as $key => $tip) {
-                    if (isset($id_document[$key])) {
+                if(!empty($tipe)){
+                    foreach ($tipe as $key => $tip) {
+                        if (isset($id_document[$key])) {
 
-                        $ceksertif = Certificate::whereNotIn('id_document',  $id_document)->where('employee_id', $karyawan->employee_id)->get();
+                            $ceksertif = Certificate::whereNotIn('id_document',  $id_document)->where('employee_id', $karyawan->employee_id)->get();
 
-                        if ($ceksertif->isNotEmpty()) {
-                            // foreach ($ceksertif as $del) {
-                            //     unlink(storage_path('app/public/certificate/' . $del->name_c));
-                            // }
-                            $delsertif = Certificate::where('id_document', '!=', $id_document[$key])->where('employee_id', $karyawan->employee_id)->delete();
+                            if ($ceksertif->isNotEmpty()) {
+                                // foreach ($ceksertif as $del) {
+                                //     unlink(storage_path('app/public/certificate/' . $del->name_c));
+                                // }
+                                $delsertif = Certificate::where('id_document', '!=', $id_document[$key])->where('employee_id', $karyawan->employee_id)->delete();
+                            }
+
+                            $sertif = Certificate::findOrFail($id_document[$key]);
+                            $sertif->type = $tip;
+                            $sertif->save();
                         }
-
-                        $sertif = Certificate::findOrFail($id_document[$key]);
-                        $sertif->type = $tip;
-                        $sertif->save();
                     }
                 }
+
                 if ($request->hasFile('file')) {
                     $file = $request->file('file');
                     foreach ($file as $key => $value) {
