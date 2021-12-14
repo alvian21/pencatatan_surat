@@ -35,6 +35,22 @@ Surat Masuk
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="kepada">Kepada</label>
+                                    <input type="text" class="form-control" required id="kepada" name="kepada">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="posisi">Posisi Surat</label>
+                                    <input type="text" class="form-control" required id="posisi" name="posisi">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="tanggal_masuk">Tanggal Masuk</label>
                                     <input type="date" class="form-control" required readonly value="{{date('Y-m-d')}}"
                                         id="tanggal_masuk" name="tanggal_masuk">

@@ -298,7 +298,7 @@ class SuratKeluarController extends Controller
 
                     $surat->save();
                     DB::commit();
-                    $html = ' <div class="alert alert-success" role="alert">Surat masuk berhasil di update </div>';
+                    $html = ' <div class="alert alert-success" role="alert">Surat keluar berhasil di update </div>';
                     return response()->json([
                         'status' => true,
                         'data' => $html

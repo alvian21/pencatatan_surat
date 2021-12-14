@@ -51,7 +51,7 @@ class DokumentasiController extends Controller
             return redirect()->back()->withErrors($validator->errors());
         } else {
             $dokumentasi = new Documentation();
-            $dokumentasi->id_user = auth()->user()->id;
+            $dokumentasi->id_user = auth()->user()->id_user;
             $dokumentasi->name_of_activity = $request->get('nama_kegiatan');
             $dokumentasi->activity_place = $request->get('tempat_kegiatan');
             $dokumentasi->activity_date = $request->get('tanggal_kegiatan');
@@ -65,6 +65,7 @@ class DokumentasiController extends Controller
                 $path = $request->file('gambar')->storeAs("public/image", $filenameSimpan);
                 $dokumentasi->image = $filenameSimpan;
             }
+
             $dokumentasi->save();
 
             return redirect()->route('dokumentasi.index')->with('success', 'Data Dokumentasi berhasil disimpan');
@@ -117,7 +118,7 @@ class DokumentasiController extends Controller
             return redirect()->back()->withErrors($validator->errors());
         } else {
             $dokumentasi = Documentation::findOrFail($id);
-            $dokumentasi->id_user = auth()->user()->id;
+          
             $dokumentasi->name_of_activity = $request->get('nama_kegiatan');
             $dokumentasi->activity_place = $request->get('tempat_kegiatan');
             $dokumentasi->activity_date = $request->get('tanggal_kegiatan');

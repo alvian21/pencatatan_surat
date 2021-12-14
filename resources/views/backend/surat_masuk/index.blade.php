@@ -30,6 +30,7 @@ Surat Masuk
                                     <th>Dari</th>
                                     <th>Kode Surat</th>
                                     <th>Dokumen</th>
+                                    <th>Posisi</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -44,6 +45,7 @@ Surat Masuk
                                     <td>{{$item->description_letter_code}}</td>
                                     <td><a href="{{route('surat_masuk.download',[$item->id_incoming])}}"
                                             class="btn btn-info"><i class="fas fa-download"></i></a></td>
+                                    <td>{{$item->position}}</td>
                                     <td>{{$item->status}}</td>
                                     <td>
                                         <a href="{{route('surat_masuk.edit',[$item->id_incoming])}}"
@@ -71,6 +73,7 @@ Surat Masuk
                                     <th>Dari</th>
                                     <th>Kode Surat</th>
                                     <th>Dokumen</th>
+                                    <th>Posisi</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -85,6 +88,7 @@ Surat Masuk
                                     <td>{{$item->description_letter_code}}</td>
                                     <td><a href="{{route('surat_masuk.download',[$item->id_incoming])}}"
                                             class="btn btn-info"><i class="fas fa-download"></i></a></td>
+                                    <td>{{$item->position}}</td>
                                     <td>{{$item->status}}</td>
                                     <td>
                                         <a href="#" class="btn btn-warning btnedit" data-id="{{$item->id_incoming}}"><i
@@ -162,7 +166,7 @@ Surat Masuk
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-         }
+        }
 
         $('.hapus').on('click', function () {
             var id = $(this).data('id')
@@ -173,23 +177,24 @@ Surat Masuk
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
-                    })
-                    .then((willDelete) => {
+                })
+                .then((willDelete) => {
                     if (willDelete) {
                         ajax()
                         $.ajax({
-                            url:"{{url('surat_masuk')}}/"+id,
-                            method:"DELETE",
-                            success:function(response){
-                                if(response.status){
+                            url: "{{url('surat_masuk')}}/" + id,
+                            method: "DELETE",
+                            success: function (response) {
+                                if (response.status) {
                                     location.reload(true)
                                 }
                             }
                         })
                     }
                 });
-         })
-     })
+        })
+    })
+
 </script>
 @else
 <script>
@@ -202,62 +207,67 @@ Surat Masuk
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-         }
+        }
 
 
-         $(document).on('click','.btnedit',function () {
-                var id = $(this).data('id')
-                $('.id_incoming').val(id)
+        $(document).on('click', '.btnedit', function () {
+            var id = $(this).data('id')
+            $('.id_incoming').val(id)
             console.log(id);
-                $.ajax({
-                    url:"{{route('surat_masuk.data_surat')}}",
-                    method:"GET",
-                    data:{
-                        id:id
-                    },success:function(response){
-                        if(response.status){
-                            var data =response.data;
-                            // $('#status').val(data.status).change()
-                            $('#keterangan').val(data.status_description)
-                        }
+            $.ajax({
+                url: "{{route('surat_masuk.data_surat')}}",
+                method: "GET",
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    if (response.status) {
+                        var data = response.data;
+                        // $('#status').val(data.status).change()
+                        $('#keterangan').val(data.status_description)
                     }
-                })
-
-                $('#updateModal').modal('show')
-
-          })
-
-          $(document).on('click','.btnsimpan', function () {
-                var formUpload = new FormData();
-                var data = $('#formSurat').serializeArray();
-                if($('#paraf')[0].files[0]){
-                    formUpload.append("paraf", $('#paraf')[0].files[0]);
                 }
+            })
 
-                $.each(data, function(key, el) {
-                    formUpload.append(el.name, el.value);
-                });
+            $('#updateModal').modal('show')
 
-                ajax()
-                $.ajax({
-                    url:"{{route('surat_masuk.update_surat')}}",
-                    method:"POST",
-                    data:formUpload,
-                    processData: false,
-                    contentType: false,
-                    dataType: "json",
-                    success:function(response){
-                        if(response.status){
-                            setTimeout(function () {   $('#updateModal').modal('hide') ; window.location.reload(true)  },1500)
-                            }
-                    $('#data-alert').html(response.data)
+        })
+
+        $(document).on('click', '.btnsimpan', function () {
+            var formUpload = new FormData();
+            var data = $('#formSurat').serializeArray();
+            if ($('#paraf')[0].files[0]) {
+                formUpload.append("paraf", $('#paraf')[0].files[0]);
+            }
+
+            $.each(data, function (key, el) {
+                formUpload.append(el.name, el.value);
+            });
+
+            ajax()
+            $.ajax({
+                url: "{{route('surat_masuk.update_surat')}}",
+                method: "POST",
+                data: formUpload,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status) {
+                        setTimeout(function () {
+                            $('#updateModal').modal('hide');
+                            window.location.reload(true)
+                        }, 1500)
                     }
-                })
+                    $('#data-alert').html(response.data)
+                }
+            })
 
-           })
+        })
 
 
-     })
+    })
+
 </script>
 @endif
 

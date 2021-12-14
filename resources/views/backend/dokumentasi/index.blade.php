@@ -85,7 +85,7 @@ Dokumentasi
                     if (willDelete) {
                         ajax()
                         $.ajax({
-                            url:"{{url('siswa')}}/"+id,
+                            url:"{{url('dokumentasi')}}/"+id,
                             method:"DELETE",
                             success:function(response){
                                 if(response.status){

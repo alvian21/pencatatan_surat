@@ -56,7 +56,7 @@ class KaryawanController extends Controller
 
             try {
                 $karyawan = new Employee();
-                $karyawan->id_user = auth()->user()->id;
+                $karyawan->id_user =  auth()->user()->id_user;
                 $karyawan->name_e = $request->get('nama');
                 $karyawan->birth_date = $request->get('tanggal_lahir');
                 $karyawan->birth_place = $request->get('tempat_lahir');

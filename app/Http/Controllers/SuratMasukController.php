@@ -46,6 +46,8 @@ class SuratMasukController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'dari' => 'required',
+            'kepada' => 'required',
+            'posisi' => 'required',
             'nomor_surat' => 'required|unique:incoming_mails,reference_number_i',
             'tanggal_masuk' => 'required',
             'tanggal_surat' => 'required',
@@ -65,6 +67,8 @@ class SuratMasukController extends Controller
                 $surat->date_of_receipt = $request->get('tanggal_masuk');
                 $surat->letter_date_i = $request->get('tanggal_surat');
                 $surat->from = $request->get('dari');
+                $surat->to = $request->get('kepada');
+                $surat->position = $request->get('posisi');
                 $surat->description_i = $request->get('perihal');
                 $surat->status = "BELUM DISETUJUI";
                 $surat->letter_code = $request->get('kode_surat');
@@ -132,6 +136,8 @@ class SuratMasukController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'dari' => 'required',
+            'kepada' => 'required',
+            'posisi' => 'required',
             'nomor_surat' => 'required|unique:incoming_mails,reference_number_i,' . $id . ',id_incoming',
             'tanggal_masuk' => 'required',
             'tanggal_surat' => 'required',
@@ -150,6 +156,8 @@ class SuratMasukController extends Controller
                 // $surat->date_of_receipt = $request->get('tanggal_masuk');
                 $surat->letter_date_i = $request->get('tanggal_surat');
                 $surat->from = $request->get('dari');
+                $surat->to = $request->get('kepada');
+                $surat->position = $request->get('posisi');
                 $surat->description_i = $request->get('perihal');
                 $surat->status = "BELUM DISETUJUI";
                 $surat->letter_code = $request->get('kode_surat');

@@ -23,6 +23,7 @@ class CreateIncomingMailsTable extends Migration
             $table->string('from');
             $table->longText('description_i');
             $table->string('to')->nullable();
+            $table->string('position')->nullable();
             $table->string('regarding_i')->nullable();
             $table->string('status')->nullable();
             $table->string('status_description')->nullable();
