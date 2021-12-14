@@ -51,10 +51,12 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
     Route::resource('sertifikat', 'SertifikatController');
     Route::group(['prefix' => 'surat_masuk', 'as' => 'surat_masuk.'], function () {
         Route::get('download/{id}', 'SuratMasukController@download')->name('download');
+        Route::get('cetak_pdf/{id}', 'SuratMasukController@cetak_pdf')->name('cetak_pdf');
     });
     Route::group(['prefix' => 'surat_keluar', 'as' => 'surat_keluar.'], function () {
         Route::get('download/{id}', 'SuratKeluarController@download')->name('download');
         Route::get('generate', 'SuratKeluarController@generateKode')->name('generate');
+        Route::get('cetak_pdf/{id}', 'SuratKeluarController@cetak_pdf')->name('cetak_pdf');
     });
     Route::resource('surat_masuk', 'SuratMasukController');
     Route::resource('surat_keluar', 'SuratKeluarController');

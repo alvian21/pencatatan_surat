@@ -50,7 +50,9 @@ Surat Masuk
                                     <td>
                                         <a href="{{route('surat_masuk.edit',[$item->id_incoming])}}"
                                             class="btn btn-warning"><i class="mdi mdi-pencil"></i></a>
-                                        <a href="{{route('surat_masuk.show',[$item->id_incoming])}}"
+                                        <a target="blank" href="{{route('surat_masuk.cetak_pdf',[$item->id_incoming])}}" class="btn btn-success" data-id="{{$item->id_incoming}}">
+                                            <i class="fas fa-print"></i></a>
+                                        <a  href="{{route('surat_masuk.show',[$item->id_incoming])}}"
                                             class="btn btn-info"><i class="mdi mdi-eye"></i></a>
                                         <button type="button" class="btn btn-danger hapus"
                                             data-id="{{$item->id_incoming}}"> <i class="mdi mdi-delete"></i></button>
@@ -93,6 +95,7 @@ Surat Masuk
                                     <td>
                                         <a href="#" class="btn btn-warning btnedit" data-id="{{$item->id_incoming}}"><i
                                                 class="mdi mdi-pencil"></i></a>
+                                        <a href="#" class="btn btn-success" data-id="{{$item->id_incoming}}"><i class="fas fa-print"></i></a>
                                         <a href="{{route('surat_masuk.show',[$item->id_incoming])}}"
                                             class="btn btn-info"><i class="mdi mdi-eye"></i></a>
                                     </td>

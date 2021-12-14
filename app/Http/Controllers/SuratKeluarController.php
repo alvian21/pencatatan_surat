@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\KodeSurat;
 use App\OutgoingMail;
-
+use PDF;
 class SuratKeluarController extends Controller
 {
     /**
@@ -320,5 +320,13 @@ class SuratKeluarController extends Controller
                 'data' => $surat
             ]);
         }
+    }
+
+    public function cetak_pdf($id)
+    {
+    	$surat = OutgoingMail::findOrFail($id);
+
+    	$pdf = PDF::loadview('backend.surat_keluar.pdf',['surat' => $surat]);
+    	return $pdf->stream('surat-keluar-pdf');
     }
 }

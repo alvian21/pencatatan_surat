@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use PDF;
 use Illuminate\Http\Request;
 use App\IncomingMail;
 use App\KodeSurat;
@@ -303,5 +304,14 @@ class SuratMasukController extends Controller
                 'data' => $surat
             ]);
         }
+    }
+
+
+    public function cetak_pdf($id)
+    {
+    	$surat = IncomingMail::findOrFail($id);
+
+    	$pdf = PDF::loadview('backend.surat_masuk.pdf',['surat' => $surat]);
+    	return $pdf->stream('surat-masuk-pdf');
     }
 }

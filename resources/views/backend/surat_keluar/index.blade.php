@@ -15,7 +15,8 @@ Surat Keluar
                 <div class="card-header container-fluid d-flex justify-content-between">
                     <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Surat Keluar</h4>
                     @if (auth()->user()->role == 'admin')
-                    <a href="{{route('surat_keluar.create')}}" class="btn btn-primary float-right">Tambah Surat Keluar</a>
+                    <a href="{{route('surat_keluar.create')}}" class="btn btn-primary float-right">Tambah Surat
+                        Keluar</a>
                     @endif
                 </div>
                 <div class="card-body">
@@ -48,6 +49,10 @@ Surat Keluar
                                     <td>
                                         <a href="{{route('surat_keluar.edit',[$item->id_outgoing])}}"
                                             class="btn btn-warning"><i class="mdi mdi-pencil"></i></a>
+                                        <a target="blank"
+                                            href="{{route('surat_keluar.cetak_pdf',[$item->id_outgoing])}}"
+                                            class="btn btn-success btnedit" data-id="{{$item->id_incoming}}">
+                                            <i class="fas fa-print"></i></a>
                                         <a href="{{route('surat_keluar.show',[$item->id_outgoing])}}"
                                             class="btn btn-info"><i class="mdi mdi-eye"></i></a>
                                         <button type="button" class="btn btn-danger hapus"
@@ -89,6 +94,10 @@ Surat Keluar
                                     <td>
                                         <a href="#" class="btn btn-warning btnedit" data-id="{{$item->id_outgoing}}"><i
                                                 class="mdi mdi-pencil"></i></a>
+                                        <a target="blank"
+                                            href="{{route('surat_keluar.cetak_pdf',[$item->id_outgoing])}}"
+                                            class="btn btn-success btnedit" data-id="{{$item->id_incoming}}">
+                                            <i class="fas fa-print"></i></a>
                                         <a href="{{route('surat_keluar.show',[$item->id_outgoing])}}"
                                             class="btn btn-info"><i class="mdi mdi-eye"></i></a>
                                     </td>
@@ -162,7 +171,7 @@ Surat Keluar
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-         }
+        }
 
         $('.hapus').on('click', function () {
             var id = $(this).data('id')
@@ -173,23 +182,24 @@ Surat Keluar
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
-                    })
-                    .then((willDelete) => {
+                })
+                .then((willDelete) => {
                     if (willDelete) {
                         ajax()
                         $.ajax({
-                            url:"{{url('surat_keluar')}}/"+id,
-                            method:"DELETE",
-                            success:function(response){
-                                if(response.status){
+                            url: "{{url('surat_keluar')}}/" + id,
+                            method: "DELETE",
+                            success: function (response) {
+                                if (response.status) {
                                     location.reload(true)
                                 }
                             }
                         })
                     }
                 });
-         })
-     })
+        })
+    })
+
 </script>
 @else
 <script>
@@ -202,62 +212,67 @@ Surat Keluar
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-         }
+        }
 
 
-         $(document).on('click','.btnedit',function () {
-                var id = $(this).data('id')
-                $('.id_outgoing').val(id)
+        $(document).on('click', '.btnedit', function () {
+            var id = $(this).data('id')
+            $('.id_outgoing').val(id)
             console.log(id);
-                $.ajax({
-                    url:"{{route('surat_keluar.data_surat')}}",
-                    method:"GET",
-                    data:{
-                        id:id
-                    },success:function(response){
-                        if(response.status){
-                            var data =response.data;
-                            // $('#status').val(data.status).change()
-                            $('#keterangan').val(data.status_description)
-                        }
+            $.ajax({
+                url: "{{route('surat_keluar.data_surat')}}",
+                method: "GET",
+                data: {
+                    id: id
+                },
+                success: function (response) {
+                    if (response.status) {
+                        var data = response.data;
+                        // $('#status').val(data.status).change()
+                        $('#keterangan').val(data.status_description)
                     }
-                })
-
-                $('#updateModal').modal('show')
-
-          })
-
-          $(document).on('click','.btnsimpan', function () {
-                var formUpload = new FormData();
-                var data = $('#formSurat').serializeArray();
-                if($('#paraf')[0].files[0]){
-                    formUpload.append("paraf", $('#paraf')[0].files[0]);
                 }
+            })
 
-                $.each(data, function(key, el) {
-                    formUpload.append(el.name, el.value);
-                });
+            $('#updateModal').modal('show')
 
-                ajax()
-                $.ajax({
-                    url:"{{route('surat_keluar.update_surat')}}",
-                    method:"POST",
-                    data:formUpload,
-                    processData: false,
-                    contentType: false,
-                    dataType: "json",
-                    success:function(response){
-                        if(response.status){
-                            setTimeout(function () {   $('#updateModal').modal('hide') ; window.location.reload(true)  },1500)
-                            }
-                    $('#data-alert').html(response.data)
+        })
+
+        $(document).on('click', '.btnsimpan', function () {
+            var formUpload = new FormData();
+            var data = $('#formSurat').serializeArray();
+            if ($('#paraf')[0].files[0]) {
+                formUpload.append("paraf", $('#paraf')[0].files[0]);
+            }
+
+            $.each(data, function (key, el) {
+                formUpload.append(el.name, el.value);
+            });
+
+            ajax()
+            $.ajax({
+                url: "{{route('surat_keluar.update_surat')}}",
+                method: "POST",
+                data: formUpload,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status) {
+                        setTimeout(function () {
+                            $('#updateModal').modal('hide');
+                            window.location.reload(true)
+                        }, 1500)
                     }
-                })
+                    $('#data-alert').html(response.data)
+                }
+            })
 
-           })
+        })
 
 
-     })
+    })
+
 </script>
 @endif
 
