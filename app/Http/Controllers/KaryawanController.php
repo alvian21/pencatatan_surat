@@ -53,7 +53,7 @@ class KaryawanController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors());
         } else {
-
+            DB::beginTransaction();
             try {
                 $karyawan = new Employee();
                 $karyawan->id_user =  auth()->user()->id_user;
@@ -67,7 +67,7 @@ class KaryawanController extends Controller
                 $karyawan->status = $request->get('status');
                 $karyawan->save();
 
-                DB::beginTransaction();
+
                 if ($request->hasFile('file')) {
                     $file = $request->file('file');
                     foreach ($file as $key => $value) {

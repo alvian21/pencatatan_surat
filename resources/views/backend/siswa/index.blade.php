@@ -40,11 +40,15 @@ Siswa
                                     <td>{{$item->nis}}</td>
                                     <td>{{$item->npsn}}</td>
                                     <td>
+
                                         <a href="{{route('siswa.edit',[$item->id_sd])}}" class="btn btn-warning"><i
                                                 class="mdi mdi-pencil"></i></a>
 
-                                        <button type="button" class="btn btn-danger hapus" data-id="{{$item->id_sd}}"> <i
-                                                class="mdi mdi-delete"></i></button>
+                                        <a href="{{route('siswa.show',[$item->id_sd])}}"
+                                            class="btn btn-info"><i class="mdi mdi-eye"></i></a>
+                                            
+                                        <button type="button" class="btn btn-danger hapus" data-id="{{$item->id_sd}}">
+                                            <i class="mdi mdi-delete"></i></button>
                                     </td>
                                 </tr>
                                 @empty
@@ -71,7 +75,7 @@ Siswa
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-         }
+        }
 
         $('.hapus').on('click', function () {
             var id = $(this).data('id')
@@ -82,22 +86,23 @@ Siswa
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
-                    })
-                    .then((willDelete) => {
+                })
+                .then((willDelete) => {
                     if (willDelete) {
                         ajax()
                         $.ajax({
-                            url:"{{url('siswa')}}/"+id,
-                            method:"DELETE",
-                            success:function(response){
-                                if(response.status){
+                            url: "{{url('siswa')}}/" + id,
+                            method: "DELETE",
+                            success: function (response) {
+                                if (response.status) {
                                     location.reload(true)
                                 }
                             }
                         })
                     }
                 });
-         })
-     })
+        })
+    })
+
 </script>
 @endpush

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\StudentDiploma;
+use App\DocumentStudent;
 
 class SiswaController extends Controller
 {
@@ -45,6 +46,7 @@ class SiswaController extends Controller
             'nisn' => 'required|unique:student_diplomas,nisn',
             'nis' => 'required|unique:student_diplomas,nis',
             'npsn' => 'required|unique:student_diplomas,npsn',
+            'file.*' => 'nullable|file'
         ]);
 
         if ($validator->fails()) {
@@ -60,6 +62,26 @@ class SiswaController extends Controller
             $siswa->nis = $request->get('nis');
             $siswa->npsn = $request->get('npsn');
             $siswa->save();
+
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                foreach ($file as $key => $value) {
+                    $dokumen = $value->getClientOriginalName();
+                    $filename = pathinfo($dokumen, PATHINFO_FILENAME);
+                    $extension = $value->getClientOriginalExtension();
+                    $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
+                    $path = $value->storeAs("public/certificate", $filenameSimpan);
+                    $tipe = $request->get('tipe')[$key];
+                    $sertif = new DocumentStudent();
+                    $sertif->id_sd = $siswa->id_sd;
+                    $sertif->name = $filenameSimpan;
+                    $sertif->type = $tipe;
+                    $sertif->upload_date = date('Y-m-d');
+                    $sertif->save();
+                }
+            }
+
             return redirect()->route('siswa.index')->with('success', 'Data Siswa berhasil disimpan');
         }
     }
@@ -72,7 +94,8 @@ class SiswaController extends Controller
      */
     public function show($id)
     {
-        //
+        $siswa = StudentDiploma::findOrFail($id);
+        return view('backend.siswa.show', ['siswa' => $siswa]);
     }
 
     /**
@@ -105,6 +128,7 @@ class SiswaController extends Controller
             'nisn' => 'required|unique:student_diplomas,nisn,' . $id . ',id_sd',
             'nis' => 'required|unique:student_diplomas,nis,' . $id . ',id_sd',
             'npsn' => 'required|unique:student_diplomas,npsn,' . $id . ',id_sd',
+            'file.*' => 'nullable|file'
         ]);
 
         if ($validator->fails()) {
@@ -119,6 +143,48 @@ class SiswaController extends Controller
             $siswa->nis = $request->get('nis');
             $siswa->npsn = $request->get('npsn');
             $siswa->save();
+
+            $tipe = $request->get('old_tipe');
+            $id_document = $request->get('id_document');
+            if (!empty($tipe)) {
+                foreach ($tipe as $key => $tip) {
+                    if (isset($id_document[$key])) {
+
+                        $ceksertif = DocumentStudent::whereNotIn('id',  $id_document)->where('id_sd', $siswa->id_sd)->get();
+
+                        if ($ceksertif->isNotEmpty()) {
+
+                            $delsertif = DocumentStudent::whereNotIn('id',  $id_document)->where('id_sd', $siswa->id_sd)->delete();
+                        }
+
+                        $sertif = DocumentStudent::where("id", $id_document[$key])->first();
+                        if ($sertif) {
+                            $sertif->type = $tip;
+                            $sertif->save();
+                        }
+                    }
+                }
+            } else {
+                $ceksertif = DocumentStudent::where('id_sd', $siswa->id_sd)->delete();
+            }
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                foreach ($file as $key => $value) {
+                    $dokumen = $value->getClientOriginalName();
+                    $filename = pathinfo($dokumen, PATHINFO_FILENAME);
+                    $extension = $value->getClientOriginalExtension();
+                    $filenameSimpan = $filename . '_' . time() . $this->genRandom() . '.' . $extension;
+                    $path = $value->storeAs("public/certificate", $filenameSimpan);
+                    $tipe = $request->get('tipe')[$key];
+                    $sertif = new DocumentStudent();
+                    $sertif->id_sd = $siswa->id_sd;
+                    $sertif->name = $filenameSimpan;
+                    $sertif->type = $tipe;
+                    $sertif->upload_date = date('Y-m-d');
+                    $sertif->save();
+                }
+            }
             return redirect()->route('siswa.index')->with('success', 'Data Siswa berhasil disimpan');
         }
     }
@@ -136,5 +202,11 @@ class SiswaController extends Controller
             $request->session()->flash('success', 'Data siswa berhasil dihapus!');
             return response()->json(['status' => true]);
         }
+    }
+
+    public function genRandom()
+    {
+        $a = mt_rand(100000, 999999);
+        return $a;
     }
 }
