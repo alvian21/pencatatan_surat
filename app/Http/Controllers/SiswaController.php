@@ -198,6 +198,7 @@ class SiswaController extends Controller
     public function destroy(Request $request, $id)
     {
         if ($request->ajax()) {
+            DocumentStudent::where('id_sd', $id)->delete();
             StudentDiploma::findOrFail($id)->delete();
             $request->session()->flash('success', 'Data siswa berhasil dihapus!');
             return response()->json(['status' => true]);
