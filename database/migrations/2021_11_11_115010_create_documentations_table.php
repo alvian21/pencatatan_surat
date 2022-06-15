@@ -22,7 +22,6 @@ class CreateDocumentationsTable extends Migration
             $table->date('activity_date');
             $table->longText('number_of_participant');
             $table->longText('description_d');
-            $table->string('image');
             $table->timestamps();
         });
     }
