@@ -108,7 +108,7 @@ class DashboardController extends Controller
         if ($request->ajax()) {
 
             $semua = Employee::has('certificate', '>=', 3)->count();
-            $sebagian = Employee::has('certificate', '<', 3)->has('certificate', '>=', 1)->count();
+            $sebagian = Employee::has('certificate', '<', 4)->has('certificate', '>=', 1)->count();
             $belum = Employee::has('certificate', '=', 0)->count();
 
             $arr = [

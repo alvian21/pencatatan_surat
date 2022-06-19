@@ -1,108 +1,109 @@
 @extends('backend.main')
 @section('content')
-<div class="page-breadcrumb bg-light">
-    <div class="row">
-        <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
-            <h5 class="font-medium text-uppercase mb-0">Dashboard</h5>
-        </div>
-        <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
-
-            <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
-                <ol class="breadcrumb mb-0 justify-content-end p-0 bg-light">
-                    <li class="breadcrumb-item"><a href="{{route('dashboard.index')}}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-</div>
-
-<div class="page-content container-fluid">
-    <!-- ============================================================== -->
-    <!-- Card Group  -->
-    <!-- ============================================================== -->
-    <div class="card-group">
-        <div class="card p-2 p-lg-3">
-            <div class="p-lg-3 p-2">
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
-                        <i class="mdi mdi-email"></i>
-                    </button>
-                    <div class="ml-4" style="width: 38%;">
-                        <h4 class="font-light">Total Surat Masuk</h4>
-                        <div class="progress">
-                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{$suratmasuk}}%"
-                                aria-valuenow="{{$suratmasuk}}" aria-valuemin="0"></div>
-                        </div>
-                    </div>
-                    <div class="ml-auto">
-                        <h2 class="display-7 mb-0">{{$suratmasuk}}</h2>
-                    </div>
-                </div>
+    <div class="page-breadcrumb bg-light">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-xs-12 align-self-center">
+                <h5 class="font-medium text-uppercase mb-0">Dashboard</h5>
             </div>
-        </div>
-        <div class="card p-2 p-lg-3">
-            <div class="p-lg-3 p-2">
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
-                        <i class="mdi mdi-email"></i>
-                    </button>
-                    <div class="ml-4" style="width: 38%;">
-                        <h4 class="font-light">Total Surat Keluar</h4>
-                        <div class="progress">
-                            <div class="progress-bar bg-cyan" role="progressbar" style="width: {{$suratkeluar}}%"
-                                aria-valuenow="{{$suratkeluar}}" aria-valuemin="0"></div>
-                        </div>
-                    </div>
-                    <div class="ml-auto">
-                        <h2 class="display-7 mb-0">{{$suratkeluar}}</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card p-2 p-lg-3">
-            <div class="p-lg-3 p-2">
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
-                        <i class="mdi mdi-account"></i>
-                    </button>
-                    <div class="ml-4" style="width: 38%;">
-                        <h4 class="font-light">Total Karyawan</h4>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{$totalkaryawan}}%"
-                                aria-valuenow="{{$totalkaryawan}}" aria-valuemin="0"></div>
-                        </div>
-                    </div>
-                    <div class="ml-auto">
-                        <h2 class="display-7 mb-0">{{$totalkaryawan}}</h2>
-                    </div>
-                </div>
+            <div class="col-lg-9 col-md-8 col-xs-12 align-self-center">
+
+                <nav aria-label="breadcrumb" class="mt-2 float-md-right float-left">
+                    <ol class="breadcrumb mb-0 justify-content-end p-0 bg-light">
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                    </ol>
+                </nav>
             </div>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- Products yearly sales, Weather Cards Section  -->
-    <!-- ============================================================== -->
-    <div class="row">
-        <div class="col-md-12 col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase text-center">Status Karyawan</h5>
 
-                    <canvas id="myChart" width="150"></canvas>
+    <div class="page-content container-fluid">
+        <!-- ============================================================== -->
+        <!-- Card Group  -->
+        <!-- ============================================================== -->
+        <div class="card-group">
+            <div class="card p-2 p-lg-3">
+                <div class="p-lg-3 p-2">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
+                            <i class="mdi mdi-email"></i>
+                        </button>
+                        <div class="ml-4" style="width: 38%;">
+                            <h4 class="font-light">Total Surat Masuk</h4>
+                            <div class="progress">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $suratmasuk }}%"
+                                    aria-valuenow="{{ $suratmasuk }}" aria-valuemin="0"></div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="display-7 mb-0">{{ $suratmasuk }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-2 p-lg-3">
+                <div class="p-lg-3 p-2">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
+                            <i class="mdi mdi-email"></i>
+                        </button>
+                        <div class="ml-4" style="width: 38%;">
+                            <h4 class="font-light">Total Surat Keluar</h4>
+                            <div class="progress">
+                                <div class="progress-bar bg-cyan" role="progressbar" style="width: {{ $suratkeluar }}%"
+                                    aria-valuenow="{{ $suratkeluar }}" aria-valuemin="0"></div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="display-7 mb-0">{{ $suratkeluar }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-2 p-lg-3">
+                <div class="p-lg-3 p-2">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
+                            <i class="mdi mdi-account"></i>
+                        </button>
+                        <div class="ml-4" style="width: 38%;">
+                            <h4 class="font-light">Total Karyawan</h4>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar"
+                                    style="width: {{ $totalkaryawan }}%" aria-valuenow="{{ $totalkaryawan }}"
+                                    aria-valuemin="0"></div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="display-7 mb-0">{{ $totalkaryawan }}</h2>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title text-uppercase text-center">Dokumen Karyawan</h5>
+        <!-- ============================================================== -->
+        <!-- Products yearly sales, Weather Cards Section  -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase text-center">Status Karyawan</h5>
 
-                    <canvas id="chartDokumen" width="150"></canvas>
+                        <canvas id="myChart" width="150"></canvas>
+                    </div>
                 </div>
             </div>
-        </div>
-        {{-- <div class="col-md-12 col-lg-4">
+            <div class="col-md-12 col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-uppercase text-center">Dokumen Karyawan</h5>
+
+                        <canvas id="chartDokumen" width="150"></canvas>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-md-12 col-lg-4">
             <div class="card">
                 <div class="bg-danger">
                     <div id="ct-daily-sales" style="height: 304px"></div>
@@ -122,11 +123,11 @@
                 </div>
             </div>
         </div> --}}
-    </div>
-    <!-- ============================================================== -->
-    <!-- Manage Table & Walet Cards Section  -->
-    <!-- ============================================================== -->
-    {{-- <div class="row">
+        </div>
+        <!-- ============================================================== -->
+        <!-- Manage Table & Walet Cards Section  -->
+        <!-- ============================================================== -->
+        {{-- <div class="row">
         <div class="col-lg-8 col-md-12">
             <div class="card">
                 <!-- Nav tabs -->
@@ -1476,136 +1477,134 @@
         </div>
     </div>
 </div> --}}
-</div>
-
+    </div>
 @endsection
 @push('scripts')
-<script>
-    const ctx = document.getElementById('myChart');
-    const ctxDokumen = document.getElementById('chartDokumen');
-    var myChart;
-    var chartDokumen;
+    <script>
+        const ctx = document.getElementById('myChart');
+        const ctxDokumen = document.getElementById('chartDokumen');
+        var myChart;
+        var chartDokumen;
 
-    $.ajax({
-        url: "{{route('dashboard.karyawan')}}",
-        method: "GET",
-        success: function (response) {
-            console.log(response);
-            $.each(response, function (index, value) {
-                console.log(value);
+        $.ajax({
+            url: "{{ route('dashboard.karyawan') }}",
+            method: "GET",
+            success: function(response) {
+                console.log(response);
+                $.each(response, function(index, value) {
+                    console.log(value);
 
-                var data = []
-                var label = []
-                value.forEach(element => {
-                    data.push(element.jumlah)
-                    label.push(element.status)
-                });
+                    var data = []
+                    var label = []
+                    value.forEach(element => {
+                        data.push(element.jumlah)
+                        label.push(element.status)
+                    });
 
-                myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: label,
-                        datasets: [{
-                            label: 'karyawan',
-                            data: data,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+                    myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: label,
+                            datasets: [{
+                                label: 'karyawan',
+                                data: data,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
                         },
-                        plugins: {
-                            legend: {
-                                display: false
+                        options: {
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        precision: 0
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
                             }
                         }
-                    }
-                });
-            })
-        }
-    })
+                    });
+                })
+            }
+        })
 
 
-    $.ajax({
-        url: "{{route('dashboard.karyawan_dokumen')}}",
-        method: "GET",
-        success: function (response) {
-            console.log(response);
-            $.each(response, function (index, value) {
-                console.log(value);
+        $.ajax({
+            url: "{{ route('dashboard.karyawan_dokumen') }}",
+            method: "GET",
+            success: function(response) {
+                console.log(response);
+                $.each(response, function(index, value) {
+                    console.log(value);
 
-                var data = []
-                var label = []
-                value.forEach(element => {
-                    data.push(element.data)
-                    label.push(element.label)
-                });
+                    var data = []
+                    var label = []
+                    value.forEach(element => {
+                        data.push(element.data)
+                        label.push(element.label)
+                    });
 
-                chartDokumen = new Chart(ctxDokumen, {
-                    type: 'bar',
-                    data: {
-                        labels: label,
-                        datasets: [{
-                            label: 'dokumen karyawan',
-                            data: data,
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.2)',
-                                'rgba(54, 162, 235, 0.2)',
-                                'rgba(255, 206, 86, 0.2)',
-                                'rgba(75, 192, 192, 0.2)',
-                                'rgba(153, 102, 255, 0.2)',
-                                'rgba(255, 159, 64, 0.2)'
-                            ],
-                            borderColor: [
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(255, 159, 64, 1)'
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+                    chartDokumen = new Chart(ctxDokumen, {
+                        type: 'bar',
+                        data: {
+                            labels: label,
+                            datasets: [{
+                                label: 'dokumen karyawan',
+                                data: data,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
                         },
-                        plugins: {
-                            legend: {
-                                display: false
+                        options: {
+                            scales: {
+                                y: {
+                                    ticks: {
+                                        precision: 0
+                                    }
+                                }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
                             }
                         }
-                    }
-                });
-            })
-        }
-    })
-
-</script>
-
-
-
-
+                    });
+                })
+            }
+        })
+    </script>
 @endpush
