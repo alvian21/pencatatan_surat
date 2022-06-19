@@ -38,9 +38,8 @@ Surat Keluar
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="nomor_surat">Nomor Surat</label>
-                                    <input type="text" readonly class="form-control" required id="nomor_surat"
+                                    <input type="text"  class="form-control" required id="nomor_surat"
                                         name="nomor_surat">
-
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -109,25 +108,6 @@ Surat Keluar
             theme: "bootstrap"
         })
 
-        $('#kode_surat').on('change', function () {
-            var kode = $(this).val()
-
-            if (kode != '') {
-                $.ajax({
-                    url: "{{route('surat_keluar.generate')}}",
-                    method: "GET",
-                    data: {
-                        kode_surat: kode
-                    },
-                    success: function (response) {
-                        if (response.status) {
-
-                            $('#nomor_surat').val(response.nomor)
-                        }
-                    }
-                })
-            }
-        })
     })
 
 </script>
