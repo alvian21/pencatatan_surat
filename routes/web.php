@@ -49,6 +49,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
     Route::resource('dokumentasi', 'DokumentasiController');
     Route::resource('karyawan', 'KaryawanController');
     Route::resource('sertifikat', 'SertifikatController');
+    Route::resource('laporan', 'LaporanController');
     Route::group(['prefix' => 'surat_masuk', 'as' => 'surat_masuk.'], function () {
         Route::get('download/{id}', 'SuratMasukController@download')->name('download');
         Route::get('cetak_pdf/{id}', 'SuratMasukController@cetak_pdf')->name('cetak_pdf');
