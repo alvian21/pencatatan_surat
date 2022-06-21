@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
         Route::get('karyawan', 'DashboardController@grafik_karyawan')->name('karyawan');
         Route::get('karyawan_dokumen', 'DashboardController@grafik_dokumen_karyawan')->name('karyawan_dokumen');
     });
+    Route::resource('pertanyaan', 'PertanyaanController');
     Route::resource('dashboard', 'DashboardController');
     Route::resource('siswa', 'SiswaController');
     Route::resource('dokumentasi', 'DokumentasiController');
@@ -64,6 +65,3 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
 
     Route::get('logout', 'AuthController@logout')->name('logout');
 });
-
-
-

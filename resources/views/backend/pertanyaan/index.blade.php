@@ -1,6 +1,6 @@
 @extends('backend.main')
 @section('title')
-    Karyawan
+    Pertanyaan
 @endsection
 @section('content')
     <div class="page-content container-fluid">
@@ -12,51 +12,32 @@
             <div class="col-12">
                 <div class="material-card card">
                     <div class="card-header container-fluid d-flex justify-content-between">
-                        <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Karyawan</h4>
-                        <a href="{{ route('karyawan.create') }}" class="btn btn-primary float-right">Tambah Karyawan</a>
+                        <h4 class="text-dark"><i class="fas fa-list pr-2"></i> Daftar Pertanyaan</h4>
+                        <a href="{{ route('pertanyaan.create') }}" class="btn btn-primary float-right">Tambah Pertanyaan</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="table-siswa" class="table table-striped border text-center">
                                 <thead>
                                     <tr>
-                                        <th>Nama</th>
-                                        <th>Tempat & Tgl. Lahir</th>
+                                        <th>No</th>
+                                        <th>Pertanyaan</th>
 
-                                        <th>Alamat</th>
-                                        <th>Nomor Hp</th>
-                                        <th>Pendidikan Terakhir</th>
-                                        <th>Jabatan</th>
-                                        <th>Jumlah Dokumen</th>
-                                        <th>Status</th>
+
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($karyawan as $item)
+                                    @forelse ($pertanyaan as $item)
                                         <tr>
-                                            <td>{{ $item->name_e }}</td>
-                                            <td>{{ $item->birth_place }},
-                                                {{ date('j F Y', strtotime($item->birth_date)) }}
-                                            </td>
-                                            <td>{{ $item->address }}</td>
-                                            <td>{{ $item->phone_number }}</td>
-                                            <td>{{ $item->last_education }}</td>
-                                            <td>{{ $item->role }}</td>
-                                            @if ($item->status == 'Tenaga Pendidik')
-                                                <td>{{ count($item->certificate) }}/4</td>
-                                            @else
-                                                <td>{{ count($item->certificate) }}/3</td>
-                                            @endif
-                                            <td>{{$item->status}}</td>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$item->name}}</td>
                                             <td>
-                                                <a href="{{ route('karyawan.edit', [$item->employee_id]) }}"
+                                                <a href="{{ route('pertanyaan.edit', [$item->id]) }}"
                                                     class="btn btn-warning"><i class="mdi mdi-pencil"></i></a>
-                                                <a href="{{ route('karyawan.show', [$item->employee_id]) }}"
+                                                <a href="{{ route('pertanyaan.show', [$item->id]) }}"
                                                     class="btn btn-info"><i class="mdi mdi-eye"></i></a>
-                                                <button type="button" class="btn btn-danger hapus"
-                                                    data-id="{{ $item->employee_id }}"> <i
-                                                        class="mdi mdi-delete"></i></button>
+
                                             </td>
                                         </tr>
                                     @empty
@@ -84,31 +65,7 @@
                 });
             }
 
-            $('.hapus').on('click', function() {
-                var id = $(this).data('id')
-                console.log(id);
-                swal({
-                        title: "Apa kamu yakin?",
-                        text: "Ketika dihapus, data tidak bisa dikembalikan lagi!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            ajax()
-                            $.ajax({
-                                url: "{{ url('karyawan') }}/" + id,
-                                method: "DELETE",
-                                success: function(response) {
-                                    if (response.status) {
-                                        location.reload(true)
-                                    }
-                                }
-                            })
-                        }
-                    });
-            })
+
         })
     </script>
 @endpush

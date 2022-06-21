@@ -88,6 +88,23 @@
                             </li>
                         </ul>
                     </li>
+                     <li class="sidebar-item">
+                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                            aria-expanded="false">
+                            <i class="mdi  mdi-file-document"></i>
+                            <span class="hide-menu">Pertanyaan</span>
+
+                        </a>
+                        <ul aria-expanded="false" class="collapse first-level">
+                            <li class="sidebar-item">
+                                <a href="{{ route('pertanyaan.index') }}" class="sidebar-link">
+                                    <i class="mdi mdi-toggle-switch"></i>
+                                    <span class="hide-menu">Jawaban</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                             aria-expanded="false">
