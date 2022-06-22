@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth', 'CheckRole:admin,kepsek']], function () {
         Route::get('karyawan_dokumen', 'DashboardController@grafik_dokumen_karyawan')->name('karyawan_dokumen');
     });
     Route::resource('pertanyaan', 'PertanyaanController');
+    Route::resource('kuesioner', 'KuesionerController');
     Route::resource('dashboard', 'DashboardController');
     Route::resource('siswa', 'SiswaController');
     Route::resource('dokumentasi', 'DokumentasiController');

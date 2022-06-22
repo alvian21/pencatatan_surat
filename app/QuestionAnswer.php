@@ -10,4 +10,9 @@ class QuestionAnswer extends Model
     {
         return $this->belongsTo('App\Question');
     }
+
+    public function hasil()
+    {
+        return $this->hasOne('App\Answer','question_answer_id', 'id');
+    }
 }

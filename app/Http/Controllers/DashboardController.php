@@ -7,6 +7,8 @@ use App\Employee;
 use Illuminate\Http\Request;
 use App\IncomingMail;
 use App\OutgoingMail;
+use App\Question;
+use App\QuestionAnswer;
 
 class DashboardController extends Controller
 {
@@ -20,9 +22,16 @@ class DashboardController extends Controller
         $suratmasuk = IncomingMail::count();
         $suratkeluar = OutgoingMail::count();
         $totalkaryawan = Employee::count();
+        $pertanyaan = Question::whereHas('detail_jawaban',function($q){
+            $q->whereHas('hasil');
+        })->count();
+        $jawaban = QuestionAnswer::whereHas('hasil',function($q){
+            $q->where('periode',date('Y'));
+        })->sum('score');
+
         return view(
             'backend.dashboard.index',
-            ['suratmasuk' => $suratmasuk, 'suratkeluar' => $suratkeluar, 'totalkaryawan' => $totalkaryawan]
+            ['suratmasuk' => $suratmasuk, 'suratkeluar' => $suratkeluar, 'totalkaryawan' => $totalkaryawan, 'jawaban' => $jawaban]
         );
     }
 

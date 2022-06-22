@@ -22,7 +22,7 @@
         <!-- Card Group  -->
         <!-- ============================================================== -->
         <div class="card-group">
-            <div class="card p-2 p-lg-3">
+            <div class="card col-md-3">
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-danger text-white btn-lg" href="javascript:void(0)">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card p-2 p-lg-3">
+            <div class="card col-md-3">
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-cyan text-white btn-lg" href="javascript:void(0)">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card p-2 p-lg-3">
+            <div class="card col-md-3">
                 <div class="p-lg-3 p-2">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
@@ -76,6 +76,26 @@
                         </div>
                         <div class="ml-auto">
                             <h2 class="display-7 mb-0">{{ $totalkaryawan }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-md-3">
+                <div class="p-lg-3 p-2">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-circle btn-warning text-white btn-lg" href="javascript:void(0)">
+                            <i class="mdi mdi-file"></i>
+                        </button>
+                        <div class="ml-4" style="width: 38%;">
+                            <h4 class="font-light">Total Nilai</h4>
+                            <div class="progress">
+                                <div class="progress-bar bg-warning" role="progressbar"
+                                    style="width: {{ $jawaban }}%" aria-valuenow="{{ $jawaban }}"
+                                    aria-valuemin="0"></div>
+                            </div>
+                        </div>
+                        <div class="ml-auto">
+                            <h2 class="display-7 mb-0">{{ $jawaban }}</h2>
                         </div>
                     </div>
                 </div>

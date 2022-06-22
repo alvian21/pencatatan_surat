@@ -88,7 +88,7 @@
                             </li>
                         </ul>
                     </li>
-                     <li class="sidebar-item">
+                    <li class="sidebar-item">
                         <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                             aria-expanded="false">
                             <i class="mdi  mdi-file-document"></i>
@@ -99,10 +99,15 @@
                             <li class="sidebar-item">
                                 <a href="{{ route('pertanyaan.index') }}" class="sidebar-link">
                                     <i class="mdi mdi-toggle-switch"></i>
-                                    <span class="hide-menu">Jawaban</span>
+                                    <span class="hide-menu">Daftar Pertanyaan</span>
                                 </a>
                             </li>
-
+                            <li class="sidebar-item">
+                                <a href="{{ route('kuesioner.index') }}" class="sidebar-link">
+                                    <i class="mdi mdi-toggle-switch"></i>
+                                    <span class="hide-menu">Isi Kuesioner</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
